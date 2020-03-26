@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Customers</title>
+</head>
+<body>
+<nav th:replace="fragment/navbar :: nav">
+	</nav>
+	<table>
+		<tr>
+			<th>Number Customer</th>
+			<th>Phone</th>
+			<th>Contact Name</th>
+			<th>Arragement</th>
+		</tr>
+		<tr th:each="customer : ${customers}">
+			<td th:text="${customer.customerNumber}"></td>
+			<td th:text="${customer.contactName}"></td>
+			<td th:text="${customer.phone}"></td>
+			<td th:text="${customer.arragement} ? true : false"></td>
+			
+		</tr>
+	</table>
+</body>
+</html>

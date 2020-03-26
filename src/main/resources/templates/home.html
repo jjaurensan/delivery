@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="${appName}"></title>
+</head>
+<body>
+	<header>
+		<p>Bienvenue sur Delivery App.</p>
+	</header>
+	<nav th:replace="fragment/navbar :: nav"></nav>
+		<div>
+			<form method="post" action="#">
+				<button type="submit">Validate</button>
+				<label ></label>
+			  		<input >
+				<button type="reset">Reset</button>
+			</form>
+		</div>
+	<footer>
+		Nous sommes le <span
+			th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy')}"></span>
+	</footer>
+
+</body>
+</html>

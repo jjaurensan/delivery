@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Delivery</title>
+</head>
+<body>
+	<nav th:replace="fragment/navbar :: nav"></nav>
+	<p>Delivery et test</p>
+	<div class="container">
+		<h4>Delivery</h4>
+		<form id="delivery" action="#" method="post">
+
+			<fieldset>
+				<label for="number_customer">Carrier</label> 
+				<select id="Carrier" th:field="${carrier}">
+					<option th:each="carrier : ${carriers}"
+					th:value="${carrier}"
+					th:text="#{${carrier.name}}"></option>
+				</select>
+			</fieldset>
+			<fieldset>
+				<label for="number_customer">Number IDcustomer</label> <input
+					id="number_customer" placeholder="Number Customer" type="text"
+					tabindex="1" required autofocus>
+			</fieldset>
+			<fieldset>
+				<label for="Address">Address</label> <select id="Address">
+					<option value="Address1">Address 1</option>
+					<option value="Address2">Address 2</option>
+				</select>
+				<fieldset>
+					<label>Street 1 <input placeholder="Street 1" type="text"
+						tabindex="4">
+					</label> <label>Street 2 <input placeholder="Street 2" type="text">
+					</label> <label>Street 3 <input placeholder="Street 3" type="text">
+					</label> <label>Zip Code <input placeholder="Zip Code" type="text">
+					</label> <label>City <input placeholder="City" type="text">
+					</label> <label>Floor <input placeholder="City" type="checkbox">
+					</label>
+				</fieldset>
+			</fieldset>
+			<fieldset>
+				<label for="number_package">Number of Packages</label> <input
+					id="number_package" placeholder="Packages" type="number"
+					tabindex="3" required>
+			</fieldset>
+			<fieldset>
+				<button name="submit" type="submit" id="submit">Submit</button>
+			</fieldset>
+		</form>
+
+	</div>
+</body>
+</html>
