@@ -9,4 +9,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
 	Customer findByCustomerNumber(String customerNumber);
 
+	void deleteByCustomerNumber(String customerNumber);
+
 }

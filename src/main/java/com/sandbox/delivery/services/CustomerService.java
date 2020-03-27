@@ -18,12 +18,25 @@ public class CustomerService {
 		return customerRepository.save(customer);
 	}
 	
-	public List <Customer> getAll(){
+	public List <Customer> getAllCustomer(){
 		return (List<Customer>) customerRepository.findAll();
 	}
 
 	public Customer getByCustomerNumber(String customerNumber) {
 		return customerRepository.findByCustomerNumber(customerNumber);
 	}
+	
+	public Customer updateCustomer(Customer customer) {
+		return customerRepository.save(customer);		
+	}
+	
+	public void deleteCustomerById(long idCustomer) {
+		customerRepository.deleteById(idCustomer);
+		
+	}
 
+	public void deleteCustomerByCustomerNumber(String customerNumber) {
+		customerRepository.deleteByCustomerNumber(customerNumber);
+		
+	}
 }

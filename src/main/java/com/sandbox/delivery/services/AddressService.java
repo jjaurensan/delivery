@@ -20,11 +20,21 @@ public class AddressService {
 
 	public List<Address> createListAddress(List<Address> listAddress) {
 		return (List<Address>) addressRepository.saveAll(listAddress);
-
 	}
 
-	public void update(Address address) {
-		addressRepository.save(address);
+	public Address update(Address address) {
+		return addressRepository.save(address);
+	}
 
+	public List<Address> getAllAddress() {
+		return (List<Address>) addressRepository.findAll();
+	}
+	
+	public Address getAddressById(long idAddress) {
+		return addressRepository.findById(idAddress).get();
+	}
+	
+	public void deleteAdrress(Address address) {
+		addressRepository.delete(address);
 	}
 }
