@@ -8,7 +8,7 @@ import com.sandbox.delivery.entities.Customer;
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
 	Customer findByCustomerNumber(String customerNumber);
-
+	
 	void deleteByCustomerNumber(String customerNumber);
 
 }
