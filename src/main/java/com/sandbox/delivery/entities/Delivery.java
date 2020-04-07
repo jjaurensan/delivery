@@ -14,36 +14,36 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-public class Delivery  {
-	
+public class Delivery {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idDelivery;
-	
+
 	@Temporal(value = TemporalType.DATE)
 	private Date createDateDelivery;
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Carrier.class)	  
-	  @JoinTable(name = "carrier_delivery",
-	             joinColumns = @JoinColumn(name = "id_delivery"),
-	             inverseJoinColumns = @JoinColumn(name = "id_carrier"))
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = Carrier.class)
+	@JoinTable(name = "carrier_delivery", joinColumns = @JoinColumn(name = "id_delivery"), inverseJoinColumns = @JoinColumn(name = "id_carrier"))
 	private Carrier carrier;
-
-	@ManyToOne( cascade = CascadeType.ALL,fetch = FetchType.LAZY, targetEntity = Customer.class)	  
-	  @JoinTable(name = "customer_delivery",
-	             joinColumns = @JoinColumn(name = "id_delivery"),
-	             inverseJoinColumns = @JoinColumn(name = "id_customer"))
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = Customer.class)
+	@JoinTable(name = "customer_delivery", joinColumns = @JoinColumn(name = "id_delivery"), inverseJoinColumns = @JoinColumn(name = "id_customer"))
 	private Customer customer;
-	
-	private int numberOfPackage=0;
 
-	public Delivery(Carrier carrier,Customer customer, int numberOfPackage) {
+	private int numberOfPackage = 0;
+
+	public Delivery(Carrier carrier, Customer customer, int numberOfPackage) {
 		this.createDateDelivery = new Date();
 		this.carrier = carrier;
-		this.customer=customer;
-		this.numberOfPackage=numberOfPackage;
+		this.customer = customer;
+		this.numberOfPackage = numberOfPackage;
 	}
 
 	public Delivery() {
@@ -88,4 +88,5 @@ public class Delivery  {
 	public void setNumberOfPackage(int numberOfPackage) {
 		this.numberOfPackage = numberOfPackage;
 	}
+
 }

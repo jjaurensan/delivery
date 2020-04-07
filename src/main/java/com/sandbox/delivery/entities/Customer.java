@@ -16,12 +16,12 @@ import javax.persistence.OneToMany;
 @Entity
 public class Customer{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idCustomer;
 
 	private String customerNumber;
 
-	@OneToMany (cascade =CascadeType.ALL ,fetch = FetchType.EAGER)
+	@OneToMany (cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE} ,fetch = FetchType.EAGER)
 	@JoinTable(name = "address_customer", 
 		joinColumns = @JoinColumn(name = "id_customer"), 
 		inverseJoinColumns = @JoinColumn(name = "id_address"))

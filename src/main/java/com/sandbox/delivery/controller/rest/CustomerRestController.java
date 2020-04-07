@@ -31,6 +31,7 @@ public class CustomerRestController {
 	public List<Customer> getListOfCustomers() {
 		return customerService.getAllCustomer();
 	}
+	
 
 	@GetMapping(path = "/customer/{customerNumber}")
 	public Customer getCustomerByCustomerNumber(@PathVariable String customerNumber) {

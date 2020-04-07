@@ -45,11 +45,14 @@ public class DeliveryServiceTest {
 	}
 
 	@Test
-	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {		
+	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {	
+		//date= LocalDateTime.now().toLocalDate();
+		//System.err.println(date.toString());
 		delivery = deliveryService.create(new Delivery(carrier, customer,2));
 		Optional<Delivery> result = deliveryRepository.findById(delivery.getIdDelivery());
+		System.out.println("resultat : " + result.get().getCreateDateDelivery());
 		assertTrue(result.isPresent());
+		
 	}
-	
 	
 }
