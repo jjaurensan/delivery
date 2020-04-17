@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,16 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-
 @Entity
 public class Customer{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
 	private long idCustomer;
 
 	private String customerNumber;
 
-	@OneToMany (cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE} ,fetch = FetchType.EAGER)
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "address_customer", 
 		joinColumns = @JoinColumn(name = "id_customer"), 
 		inverseJoinColumns = @JoinColumn(name = "id_address"))

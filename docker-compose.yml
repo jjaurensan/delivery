@@ -1,0 +1,24 @@
+# docker-compose.yml
+
+version: '3'
+
+services: 
+  delivery-mysql:
+    image: mysql:latest
+    container_name: delivery-mysql
+    environment:
+      MYSQL_DATABASE: db_delivery
+      MYSQL_USER: devRoot
+      MYSQL_PASSWORD: Lucie-2009      
+      MYSQL_ROOT_PASSWORD: Lucie-2009
+      MYSQL_HOST: '%'
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 
+  delivery-back:
+    image: delivery-back
+    container_name: delivery-back
+    depends_on:
+      - delivery-mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://delivery-mysql:3306/db_delivery?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    ports:
+      - 8080:8080

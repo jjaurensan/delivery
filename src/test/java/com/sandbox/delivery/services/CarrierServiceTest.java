@@ -23,10 +23,11 @@ public class CarrierServiceTest {
 		private CarrierService carrierService;
 		
 		private Carrier carrier;
+		private Carrier  carrierDb;
 		@BeforeEach
 		void beforeEach() {
-			carrier = new Carrier("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272");
-			carrier = carrierService.create(carrier);
+			carrierDb=carrierRepository.save(new Carrier("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272"));
+			carrier = new Carrier("youhou", "rue 1", "Rue 2", "33366", "lol", "0556587272");
 
 		}
 
@@ -37,13 +38,14 @@ public class CarrierServiceTest {
 		
 		@Test
 		void create_CreateNewCarrierInDatabase() throws Exception {
+			carrierService.create(carrier);			
 			Optional<Carrier> result = carrierRepository.findById(carrier.getIdCarrier());
 			assertTrue(result.isPresent());
 		}
 		
 		@Test
 		void update_UpdateCarrierExistingInDatabase() throws Exception {
-			Carrier carrierUpdate= carrierService.find(carrier);
+			Carrier carrierUpdate= carrierService.find(carrierDb);
 			if (carrierUpdate != null) {
 				carrierUpdate.setName("NewName");
 				carrierService.update(carrierUpdate);

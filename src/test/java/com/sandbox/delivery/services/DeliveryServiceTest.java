@@ -26,6 +26,10 @@ public class DeliveryServiceTest {
 
 	@Autowired
 	private DeliveryService deliveryService;
+	@Autowired
+	private CustomerService customerService ;
+	@Autowired
+	private CarrierService carrierService ;
 
 	private Carrier carrier;
 	private Customer customer;
@@ -37,6 +41,8 @@ public class DeliveryServiceTest {
 		carrier = new Carrier("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272");
 		addressList.add(new Address("Rue 1", null, null, "33300", "Bordeaux", false));
 		customer = new Customer("335AURES", addressList, "0558567272", "john doe", false);
+		carrier = carrierService.create(carrier);
+		customer = customerService.create(customer);
 	}
 
 	@AfterEach
@@ -46,11 +52,10 @@ public class DeliveryServiceTest {
 
 	@Test
 	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {	
-		//date= LocalDateTime.now().toLocalDate();
-		//System.err.println(date.toString());
-		delivery = deliveryService.create(new Delivery(carrier, customer,2));
+		delivery = new Delivery(carrier, customer, 5);
+		delivery =deliveryService.create(delivery);
+//		delivery = deliveryService.createOrUpdate(new Delivery(carrier, customer,2));
 		Optional<Delivery> result = deliveryRepository.findById(delivery.getIdDelivery());
-		System.out.println("resultat : " + result.get().getCreateDateDelivery());
 		assertTrue(result.isPresent());
 		
 	}
