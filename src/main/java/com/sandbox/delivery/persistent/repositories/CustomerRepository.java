@@ -1,11 +1,9 @@
-package com.sandbox.delivery.repositories;
-
-import java.util.List;
+package com.sandbox.delivery.persistent.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.sandbox.delivery.entities.Customer;
+import com.sandbox.delivery.persistent.entities.Customer;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 

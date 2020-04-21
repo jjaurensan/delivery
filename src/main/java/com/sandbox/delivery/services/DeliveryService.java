@@ -2,42 +2,16 @@ package com.sandbox.delivery.services;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import com.sandbox.delivery.services.bo.DeliveryBO;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+public interface DeliveryService {
 
-import com.sandbox.delivery.entities.Delivery;
-import com.sandbox.delivery.repositories.DeliveryRepository;
+	DeliveryBO create(DeliveryBO deliveryBO);
 
-@Service
-public class DeliveryService {
+	List<DeliveryBO> getAll();
 
-	@Autowired
-	private EntityManager em;
+	DeliveryBO createOrUpdate(DeliveryBO deliveryBO);
 
-	@Autowired
-	private DeliveryRepository deliveryRepository;
+	void deleteDeliveryById(long idDelivery);
 
-	@Transactional
-	public Delivery create(Delivery delivery) {
-		if (delivery.getCarrier().getIdCarrier() > 0) {
-			delivery = em.merge(delivery);
-			
-		} else {
-			em.persist(delivery);
-		}
-
-		return delivery;
-	}
-
-	public List<Delivery> getAll() {
-		return (List<Delivery>) deliveryRepository.findAll();
-	}
-
-	@Transactional
-	public Delivery createOrUpdate(Delivery delivery) {
-		return deliveryRepository.saveAndFlush(delivery);
-	}
 }

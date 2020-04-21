@@ -1,48 +1,22 @@
-package com.sandbox.delivery.entities;
+package com.sandbox.delivery.services.bo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-@Entity
-public class Customer{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
+public class CustomerBO{
 	private long idCustomer;
 
 	private String customerNumber;
-
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "address_customer", 
-		joinColumns = @JoinColumn(name = "id_customer"), 
-		inverseJoinColumns = @JoinColumn(name = "id_address"))
-	private List<Address> customerListDeliveryAddress = new ArrayList<>();
+	private List<AddressBO> customerListDeliveryAddress = new ArrayList<>();
 
 	private String phone;
 	private String contactName;
 	private boolean arragement;
 
-	public Customer() {
+	public CustomerBO() {
 	}
 
-	/**
-	 * @param customerNumber
-	 * @param customerListDeliveryAddress
-	 * @param phone
-	 * @param contactName
-	 * @param arragement
-	 */
-	public Customer(String customerNumber, List<Address> customerListDeliveryAddress, String phone, String contactName,
+	public CustomerBO(String customerNumber, List<AddressBO> customerListDeliveryAddress, String phone, String contactName,
 			boolean arragement) {
 		super();
 		this.customerNumber = customerNumber;
@@ -68,11 +42,11 @@ public class Customer{
 		this.customerNumber = customerNumber;
 	}
 
-	public List<Address> getCustomerListDeliveryAddress() {
+	public List<AddressBO> getCustomerListDeliveryAddress() {
 		return customerListDeliveryAddress;
 	}
 
-	public void setCustomerListDeliveryAddress(List<Address> customerListDeliveryAddress) {
+	public void setCustomerListDeliveryAddress(List<AddressBO> customerListDeliveryAddress) {
 		this.customerListDeliveryAddress = customerListDeliveryAddress;
 	}
 
@@ -104,6 +78,10 @@ public class Customer{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (arragement ? 1231 : 1237);
+		result = prime * result + ((contactName == null) ? 0 : contactName.hashCode());
+		result = prime * result
+				+ ((customerListDeliveryAddress == null) ? 0 : customerListDeliveryAddress.hashCode());
 		result = prime * result + ((customerNumber == null) ? 0 : customerNumber.hashCode());
 		result = prime * result + (int) (idCustomer ^ (idCustomer >>> 32));
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
@@ -118,14 +96,25 @@ public class Customer{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Customer other = (Customer) obj;
+		CustomerBO other = (CustomerBO) obj;
+		if (arragement != other.arragement)
+			return false;
+		if (contactName == null) {
+			if (other.contactName != null)
+				return false;
+		} else if (!contactName.equals(other.contactName))
+			return false;
+		if (customerListDeliveryAddress == null) {
+			if (other.customerListDeliveryAddress != null)
+				return false;
+		} else if (!customerListDeliveryAddress.equals(other.customerListDeliveryAddress))
+			return false;
 		if (customerNumber == null) {
 			if (other.customerNumber != null)
 				return false;
 		} else if (!customerNumber.equals(other.customerNumber))
 			return false;
-		if (idCustomer != other.idCustomer)
-			return false;
+		
 		if (phone == null) {
 			if (other.phone != null)
 				return false;
@@ -133,5 +122,6 @@ public class Customer{
 			return false;
 		return true;
 	}
+
 
 }

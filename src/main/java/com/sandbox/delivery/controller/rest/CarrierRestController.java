@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sandbox.delivery.entities.Carrier;
 import com.sandbox.delivery.exception.CarrierExistExeception;
 import com.sandbox.delivery.exception.CarrierNoExistExeception;
 import com.sandbox.delivery.services.CarrierService;
+import com.sandbox.delivery.services.bo.CarrierBO;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -27,26 +27,26 @@ public class CarrierRestController {
 	private CarrierService carrierService;
 
 	@GetMapping(path = "/carriers")
-	public List<Carrier> getListOfCarrier() {
+	public List<CarrierBO> getListOfCarrier() {
 		return carrierService.getAll();
 	}
 
 	@GetMapping(path = "/carrier/{idCarrier}")
-	public Carrier getCarrierById(@PathVariable long idCarrier) {
+	public CarrierBO getCarrierById(@PathVariable long idCarrier) {
 		return carrierService.getById(idCarrier);
 	}
 
 	@PostMapping(path = "/carrier/")
-	public ResponseEntity<Carrier> createCarrier(@RequestBody Carrier carrier, UriComponentsBuilder uriBuilder)
+	public ResponseEntity<CarrierBO> createCarrier(@RequestBody CarrierBO carrier, UriComponentsBuilder uriBuilder)
 			throws CarrierExistExeception, CarrierNoExistExeception {
-		Carrier carrierCreate = this.carrierService.create(carrier);
+		CarrierBO carrierCreate = this.carrierService.create(carrier);
 		URI uri = uriBuilder.path("/carrier/{idCarrier}").buildAndExpand(carrierCreate.getIdCarrier()).toUri();
 		return ResponseEntity.created(uri).body(carrierCreate);
 	}
 
 	@PutMapping(path = "/carrier/{idCarrier}")
-	public ResponseEntity<Carrier> updateCarrier(@RequestBody Carrier carrier, UriComponentsBuilder uriBuilder) {
-		Carrier carrierUpdate = this.carrierService.update(carrier);
+	public ResponseEntity<CarrierBO> updateCarrier(@RequestBody CarrierBO carrier, UriComponentsBuilder uriBuilder) {
+		CarrierBO carrierUpdate = this.carrierService.update(carrier);
 		URI uri = uriBuilder.path("/carrier/{idCarrier}").buildAndExpand(carrierUpdate.getIdCarrier()).toUri();
 		return ResponseEntity.created(uri).body(carrierUpdate);
 	}

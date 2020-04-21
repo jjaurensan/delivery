@@ -10,8 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sandbox.delivery.entities.Carrier;
-import com.sandbox.delivery.repositories.CarrierRepository;
+import com.sandbox.delivery.mapper.CarrierMapper;
+import com.sandbox.delivery.persistent.entities.Carrier;
+import com.sandbox.delivery.persistent.repositories.CarrierRepository;
+import com.sandbox.delivery.services.bo.CarrierBO;
+import com.sandbox.delivery.services.impl.CarrierServiceImpl;
 
 @SpringBootTest
 public class CarrierServiceTest {
@@ -20,32 +23,36 @@ public class CarrierServiceTest {
 		private CarrierRepository carrierRepository;
 		
 		@Autowired
-		private CarrierService carrierService;
+		private CarrierServiceImpl carrierService;
 		
-		private Carrier carrier;
+		private CarrierBO carrier;
 		private Carrier  carrierDb;
 		@BeforeEach
 		void beforeEach() {
 			carrierDb=carrierRepository.save(new Carrier("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272"));
-			carrier = new Carrier("youhou", "rue 1", "Rue 2", "33366", "lol", "0556587272");
+			carrier = new CarrierBO("youhou", "rue 1", "Rue 2", "33366", "lol", "0556587272");
 
 		}
 
 		@AfterEach
 		void afterEach() {
-			carrierRepository.delete(carrier);
+			carrierRepository.delete(CarrierMapper.INSTANCE.carrierBOToCarrier(carrier));
 		}
 		
 		@Test
 		void create_CreateNewCarrierInDatabase() throws Exception {
-			carrierService.create(carrier);			
-			Optional<Carrier> result = carrierRepository.findById(carrier.getIdCarrier());
+			CarrierBO carrierBO = carrierService.create(carrier);			
+			Optional<Carrier> result = carrierRepository.findById(carrierBO.getIdCarrier());
 			assertTrue(result.isPresent());
 		}
 		
 		@Test
 		void update_UpdateCarrierExistingInDatabase() throws Exception {
-			Carrier carrierUpdate= carrierService.find(carrierDb);
+			
+			CarrierBO carrierUpdate= carrierService.find(
+					CarrierMapper.INSTANCE.carrierToCarrierBO(carrierDb)
+					);
+			
 			if (carrierUpdate != null) {
 				carrierUpdate.setName("NewName");
 				carrierService.update(carrierUpdate);

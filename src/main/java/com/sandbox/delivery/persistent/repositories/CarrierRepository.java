@@ -1,9 +1,9 @@
-package com.sandbox.delivery.repositories;
+package com.sandbox.delivery.persistent.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.sandbox.delivery.entities.Carrier;
+import com.sandbox.delivery.persistent.entities.Carrier;
 @Repository
 public interface CarrierRepository extends CrudRepository<Carrier, Long> {
 

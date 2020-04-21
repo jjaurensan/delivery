@@ -1,20 +1,8 @@
-package com.sandbox.delivery.entities;
+package com.sandbox.delivery.services.bo;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class AddressBO {
 
-@Entity
-public class Address {
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
-	private long idAdress;
-
+	private long idAddress;
 	private String streetOne;
 	private String streetTwo;
 	private String streetThree;
@@ -22,18 +10,10 @@ public class Address {
 	private String city;
 	private boolean floor;
 
-	public Address() {
+	public AddressBO() {
 	}
 
-	/**
-	 * @param streetOne
-	 * @param streetTwo
-	 * @param streetThree
-	 * @param zipCode
-	 * @param city
-	 * @param floor
-	 */
-	public Address(String streetOne, String streetTwo, String streetThree, String zipCode, String city, boolean floor) {
+	public AddressBO(String streetOne, String streetTwo, String streetThree, String zipCode, String city, boolean floor) {
 		super();
 		this.streetOne = streetOne;
 		this.streetTwo = streetTwo;
@@ -44,11 +24,11 @@ public class Address {
 	}
 
 	public long getIdAddress() {
-		return idAdress;
+		return idAddress;
 	}
 
 	public void setIdAddress(long id) {
-		this.idAdress = id;
+		this.idAddress = id;
 	}
 
 	public String getStreetOne() {

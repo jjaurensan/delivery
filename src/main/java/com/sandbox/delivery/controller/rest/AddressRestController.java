@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sandbox.delivery.entities.Address;
 import com.sandbox.delivery.services.AddressService;
+import com.sandbox.delivery.services.bo.AddressBO;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,25 +25,25 @@ public class AddressRestController {
 	private AddressService addressService;
 
 	@GetMapping(path = "/address")
-	public List<Address> getListOfAddress() {
+	public List<AddressBO> getListOfAddress() {
 		return addressService.getAllAddress();
 	}
 
 	@GetMapping(path = "/address/{idAddress}")
-	public Address getAddressById(@PathVariable long idAddress) {
+	public AddressBO getAddressById(@PathVariable long idAddress) {
 		return addressService.getAddressById(idAddress);
 	}
 
 	@PostMapping(path = "/address/")
-	public ResponseEntity<Address> createAddress(@RequestBody Address address, UriComponentsBuilder uriBuilder) {
-		Address addressCreate = this.addressService.create(address);
+	public ResponseEntity<AddressBO> createAddress(@RequestBody AddressBO address, UriComponentsBuilder uriBuilder) {
+		AddressBO addressCreate = this.addressService.create(address);
 		URI uri = uriBuilder.path("/address/{idAddress}").buildAndExpand(addressCreate.getIdAddress()).toUri();
 		return ResponseEntity.created(uri).body(addressCreate);
 	}
 
 	@PutMapping(path = "/address/{idAddress}")
-	public ResponseEntity<Address> updateAddress(@RequestBody Address address, UriComponentsBuilder uriBuilder) {
-		Address addressUpdate = this.addressService.update(address);
+	public ResponseEntity<AddressBO> updateAddress(@RequestBody AddressBO address, UriComponentsBuilder uriBuilder) {
+		AddressBO addressUpdate = this.addressService.update(address);
 		URI uri = uriBuilder.path("/address/{idAddress}").buildAndExpand(addressUpdate.getIdAddress()).toUri();
 		return ResponseEntity.created(uri).body(addressUpdate);
 	}

@@ -1,4 +1,4 @@
-package com.sandbox.delivery.entities;
+package com.sandbox.delivery.persistent.entities;
 
 import java.io.Serializable;
 

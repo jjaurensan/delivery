@@ -1,6 +1,6 @@
 package com.sandbox.delivery.services;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,23 @@ import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sandbox.delivery.entities.Address;
-import com.sandbox.delivery.entities.Carrier;
-import com.sandbox.delivery.entities.Customer;
-import com.sandbox.delivery.entities.Delivery;
-import com.sandbox.delivery.repositories.DeliveryRepository;
+import com.sandbox.delivery.mapper.DeliveryMapper;
+import com.sandbox.delivery.persistent.entities.Delivery;
+import com.sandbox.delivery.persistent.repositories.DeliveryRepository;
+import com.sandbox.delivery.services.bo.AddressBO;
+import com.sandbox.delivery.services.bo.CarrierBO;
+import com.sandbox.delivery.services.bo.CustomerBO;
+import com.sandbox.delivery.services.bo.DeliveryBO;
 
 @SpringBootTest
 public class DeliveryServiceTest {
+
+	final Logger logger = LoggerFactory.getLogger(DeliveryServiceTest.class);
 
 	@Autowired
 	private DeliveryRepository deliveryRepository;
@@ -27,37 +33,47 @@ public class DeliveryServiceTest {
 	@Autowired
 	private DeliveryService deliveryService;
 	@Autowired
-	private CustomerService customerService ;
+	private CustomerService customerService;
 	@Autowired
-	private CarrierService carrierService ;
+	private CarrierService carrierService;
 
-	private Carrier carrier;
-	private Customer customer;
-	private List<Address> addressList = new ArrayList<>();
-	private Delivery delivery;
-	
+	private CarrierBO carrier;
+	private CustomerBO customer;
+	private List<AddressBO> addressList = new ArrayList<>();
+	private DeliveryBO deliveryBO;
+
 	@BeforeEach
 	void beforeEach() {
-		carrier = new Carrier("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272");
-		addressList.add(new Address("Rue 1", null, null, "33300", "Bordeaux", false));
-		customer = new Customer("335AURES", addressList, "0558567272", "john doe", false);
+		carrier = new CarrierBO("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272");
+		addressList.add(new AddressBO("Rue 1", null, null, "33300", "Bordeaux", false));
+		customer = new CustomerBO("335AURES", addressList, "0558567272", "john doe", false);
 		carrier = carrierService.create(carrier);
 		customer = customerService.create(customer);
 	}
 
 	@AfterEach
 	void afterEach() {
-		deliveryRepository.delete(delivery);
+		deliveryRepository.delete(DeliveryMapper.INSTANCE.deliveryBOToDelivery(deliveryBO));
 	}
 
 	@Test
-	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {	
-		delivery = new Delivery(carrier, customer, 5);
-		delivery =deliveryService.create(delivery);
-//		delivery = deliveryService.createOrUpdate(new Delivery(carrier, customer,2));
-		Optional<Delivery> result = deliveryRepository.findById(delivery.getIdDelivery());
+	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {
+		deliveryBO = new DeliveryBO(carrier, customer, 5);
+		deliveryBO = deliveryService.create(deliveryBO);
+		Optional<Delivery> result = deliveryRepository.findById(deliveryBO.getIdDelivery());
 		assertTrue(result.isPresent());
-		
+		assertEquals(deliveryBO.getCustomer().getCustomerNumber(), result.get().getCustomer().getCustomerNumber());
+		assertEquals(deliveryBO.getCarrier().getIdCarrier(), result.get().getCarrier().getIdCarrier());
 	}
-	
+
+	@Test
+	void updateDelivery_UpdateDeliveryInDatabase() throws Exception {
+		deliveryBO = new DeliveryBO(carrier, customer, 5);
+		deliveryBO = deliveryService.create(deliveryBO);
+		deliveryBO.setNumberOfPackage(15);
+		DeliveryBO result = deliveryService.createOrUpdate(deliveryBO);
+		assertEquals(deliveryBO.getIdDelivery(), result.getIdDelivery());
+		assertEquals(deliveryBO.getNumberOfPackage(), result.getNumberOfPackage());
+		assertEquals(15, result.getNumberOfPackage());
+	}
 }

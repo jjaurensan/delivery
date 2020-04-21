@@ -10,8 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sandbox.delivery.entities.Address;
-import com.sandbox.delivery.repositories.AddressRepository;
+import com.sandbox.delivery.mapper.AddressMapper;
+import com.sandbox.delivery.persistent.entities.Address;
+import com.sandbox.delivery.persistent.repositories.AddressRepository;
+import com.sandbox.delivery.services.bo.AddressBO;
+import com.sandbox.delivery.services.impl.AddressServiceImpl;
 
 @SpringBootTest
 public class AddressServiceTest {
@@ -20,33 +23,34 @@ public class AddressServiceTest {
 	private AddressRepository addressRepository;
 
 	@Autowired
-	private AddressService addressService;
+	private AddressServiceImpl addressService;
 
-	private Address address;
+	private AddressBO addressBO;
 
 	@BeforeEach
 	void beforeEach() {
-		address = addressService.create(new Address("Rue 1", "Rue 2", "Rue3", "33300", "Bordeaux", false));
+		addressBO = addressService.create(new AddressBO("Rue 1", "Rue 2", "Rue3", "33300", "Bordeaux", false));
 	}
 
 	@AfterEach
 	void afterEach() {
-		addressRepository.delete(address);
+		
+		addressRepository.delete(AddressMapper.INSTANCE.addressBOToAddress(addressBO));
 	}
 
 	@Test
 	void createAddress_CreateANewAddressInRepository() throws Exception {
 
-		Optional<Address> resultQuery = addressRepository.findById(address.getIdAddress());
+		Optional<Address> resultQuery = addressRepository.findById(addressBO.getIdAddress());
 		assertTrue(resultQuery.isPresent());
 	}
 
 	@Test
 	void updateAdress_UpdateAAddessInRepo() throws Exception {
 
-		address.setCity("louens");
-		addressService.update(address);
-		Address resultQuery = addressRepository.findById(address.getIdAddress()).get();
+		addressBO.setCity("louens");
+		addressService.update(addressBO);
+		Address resultQuery = addressRepository.findById(addressBO.getIdAddress()).get();
 		assertTrue(resultQuery.getCity().equals("louens"));
 	}
 

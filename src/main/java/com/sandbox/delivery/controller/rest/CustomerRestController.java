@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sandbox.delivery.entities.Customer;
 import com.sandbox.delivery.exception.CustomerExistExeception;
 import com.sandbox.delivery.exception.CustomerNoExistExeception;
 import com.sandbox.delivery.services.CustomerService;
+import com.sandbox.delivery.services.bo.CustomerBO;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,30 +28,30 @@ public class CustomerRestController {
 	private CustomerService customerService;
 
 	@GetMapping(path = "/customers")
-	public List<Customer> getListOfCustomers() {
+	public List<CustomerBO> getListOfCustomers() {
 		return customerService.getAllCustomer();
 	}
 	
 
 	@GetMapping(path = "/customer/{customerNumber}")
-	public Customer getCustomerByCustomerNumber(@PathVariable String customerNumber) {
+	public CustomerBO getCustomerByCustomerNumber(@PathVariable String customerNumber) {
 		return customerService.getByCustomerNumber(customerNumber);
 	}
 	
 	@PostMapping(path = "/customer/")
-	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer,
+	public ResponseEntity<CustomerBO> createCustomer(@RequestBody CustomerBO customer,
 			UriComponentsBuilder uriBuilder)
 	throws CustomerExistExeception,CustomerNoExistExeception {
-		Customer customerCreate = this.customerService.create(customer);
+		CustomerBO customerCreate = this.customerService.create(customer);
 		URI uri = uriBuilder.path("/customer/{customerNumber}")
 				.buildAndExpand(customerCreate.getCustomerNumber()).toUri();
 		return ResponseEntity.created(uri).body(customerCreate);
 	}
 
 	@PutMapping(path = "/customer/{customerNumber}")
-	public ResponseEntity<Customer>updateCustomer(@RequestBody Customer customer,
+	public ResponseEntity<CustomerBO>updateCustomer(@RequestBody CustomerBO customer,
 			UriComponentsBuilder uriBuilder){
-		Customer customerUpdate = this.customerService.updateCustomer(customer);
+		CustomerBO customerUpdate = this.customerService.updateCustomer(customer);
 		URI uri = uriBuilder.path("/customer/{customerNumber}").buildAndExpand(customerUpdate.getCustomerNumber()).toUri();
 		return ResponseEntity.created(uri).body(customerUpdate);
 	}

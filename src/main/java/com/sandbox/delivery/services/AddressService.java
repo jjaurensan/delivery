@@ -2,41 +2,19 @@ package com.sandbox.delivery.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.sandbox.delivery.services.bo.AddressBO;
 
-import com.sandbox.delivery.entities.Address;
-import com.sandbox.delivery.repositories.AddressRepository;
+public interface AddressService {
 
-@Service
-public class AddressService {
+	AddressBO create(AddressBO addressBO);
 
-	@Autowired
-	private AddressRepository addressRepository;
-	
-	@Transactional
-	public Address create(Address address) {
-		return addressRepository.save(address);
-	}
+	List<AddressBO> createListAddress(List<AddressBO> listAddressBO);
 
-	public List<Address> createListAddress(List<Address> listAddress) {
-		return (List<Address>) addressRepository.saveAll(listAddress);
-	}
+	AddressBO update(AddressBO addressBO);
 
-	public Address update(Address address) {
-		return addressRepository.save(address);
-	}
+	List<AddressBO> getAllAddress();
 
-	public List<Address> getAllAddress() {
-		return (List<Address>) addressRepository.findAll();
-	}
-	
-	public Address getAddressById(long idAddress) {
-		return addressRepository.findById(idAddress).get();
-	}
-	@Transactional
-	public void deleteAdrress(Address address) {
-		addressRepository.delete(address);
-	}
+	AddressBO getAddressById(long idAddress);
+
+	void deleteAdrress(AddressBO addressBO);
 }
