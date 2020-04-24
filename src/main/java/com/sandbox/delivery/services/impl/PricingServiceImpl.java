@@ -1,6 +1,8 @@
 package com.sandbox.delivery.services.impl;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,4 +43,14 @@ public class PricingServiceImpl implements PricingService {
 		return null;
 	}
 
+	@Override
+	public List<PricingBO> getAll() {
+		List<Pricing> listPricing = pricingRepository.findAll();
+		return PricingMapper.PRICING_MAPPER.listPricingToPricingBO(listPricing);
+	}
+	
+	@Override
+	public void deletePricingById(long idPricingBO) {
+		pricingRepository.deleteById(idPricingBO);		
+	}
 }

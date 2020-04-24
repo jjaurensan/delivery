@@ -1,5 +1,7 @@
 package com.sandbox.delivery.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -13,4 +15,7 @@ public interface PricingMapper {
 	PricingBO pricingToPricingBO(Pricing pricing);
 
 	Pricing pricingBoToPricing(PricingBO pricingBO);
+	
+	List<PricingBO> listPricingToPricingBO(List<Pricing> listPricing);
+	List<Pricing> listPricingBOToPricing(List<PricingBO> listPricingBO);
 }

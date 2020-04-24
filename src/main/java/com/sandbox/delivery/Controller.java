@@ -67,8 +67,9 @@ public class Controller {
 	public String homePageGeneratePDF(Model model) {
 		model.addAttribute("appName", appName);
 		model.addAttribute("localDateTime", LocalDateTime.now());
+		MyPdfGenerator monDoc;
 		try {
-			MyPdfGenerator monDoc = new MyPdfGenerator(deliveryService.getAll());
+			 monDoc = new MyPdfGenerator(deliveryService.getAll());
 		} catch (IOException e) {
 			logger.error("context", e);
 		}
