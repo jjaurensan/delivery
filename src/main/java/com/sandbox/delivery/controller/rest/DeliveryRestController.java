@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sandbox.delivery.services.DeliveryService;
-import com.sandbox.delivery.services.bo.CustomerBO;
 import com.sandbox.delivery.services.bo.DeliveryBO;
 
 @CrossOrigin(origins = "http://localhost:4200")

@@ -58,7 +58,7 @@ public class DeliveryServiceTest {
 
 	@Test
 	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {
-		deliveryBO = new DeliveryBO(carrier, customer, 5);
+		deliveryBO = new DeliveryBO(carrier, customer, 5,12.25);
 		deliveryBO = deliveryService.create(deliveryBO);
 		Optional<Delivery> result = deliveryRepository.findById(deliveryBO.getIdDelivery());
 		assertTrue(result.isPresent());
@@ -68,7 +68,7 @@ public class DeliveryServiceTest {
 
 	@Test
 	void updateDelivery_UpdateDeliveryInDatabase() throws Exception {
-		deliveryBO = new DeliveryBO(carrier, customer, 5);
+		deliveryBO = new DeliveryBO(carrier, customer, 5,12.5);
 		deliveryBO = deliveryService.create(deliveryBO);
 		deliveryBO.setNumberOfPackage(15);
 		DeliveryBO result = deliveryService.createOrUpdate(deliveryBO);

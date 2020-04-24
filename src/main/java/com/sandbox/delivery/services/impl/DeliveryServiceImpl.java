@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +17,8 @@ import com.sandbox.delivery.services.bo.DeliveryBO;
 @Service("DeliveryService")
 public class DeliveryServiceImpl implements DeliveryService {
 
-	final Logger logger = LoggerFactory.getLogger(DeliveryServiceImpl.class);
 
+	
 	final DeliveryMapper mapper = DeliveryMapper.INSTANCE;
 
 	@Autowired

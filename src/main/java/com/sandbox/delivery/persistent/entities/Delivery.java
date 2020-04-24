@@ -31,12 +31,15 @@ public class Delivery {
 	private Customer customer;
 	
 	private int numberOfPackage = 0;
+	
+	private double weight=0;
 
-	public Delivery(Carrier carrier, Customer customer, int numberOfPackage) {
+	public Delivery(Carrier carrier, Customer customer, int numberOfPackage,long weight) {
 		this.createDateDelivery = new Date();
 		this.carrier = carrier;
 		this.customer = customer;
 		this.numberOfPackage = numberOfPackage;
+		this.weight = weight;
 	}
 
 	public Delivery() {
@@ -80,6 +83,14 @@ public class Delivery {
 
 	public void setNumberOfPackage(int numberOfPackage) {
 		this.numberOfPackage = numberOfPackage;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 
 }
