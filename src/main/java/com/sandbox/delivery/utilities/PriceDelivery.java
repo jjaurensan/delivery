@@ -1,6 +1,5 @@
 package com.sandbox.delivery.utilities;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +18,32 @@ public class PriceDelivery {
 
 	public double getDeliveryPrice(DeliveryBO delivery) {
 
-		double price = 0.0;
-
-		PricingBO p = pricingService.getPricingByCarrier(delivery.getCarrier());
+		double priceForDelivery = 0.0;
+		PricingBO pricingGrid = pricingService.getPricingByCarrier(delivery.getCarrier());
+		priceForDelivery += getPriceForWeight(delivery, pricingGrid.getListPrice());
 
 		if (delivery.getCustomer().isArragement()) {
-			price += p.getArragement();
+			priceForDelivery += pricingGrid.getArragement();
 		}
-
 		if (delivery.getAddress().isFloor()) {
-			price += p.getFloor();
+			priceForDelivery += pricingGrid.getFloor();
 		}
+		return priceForDelivery;
+	}
 
-		List<PriceBO> listPriceCarrier = p.getListPrice();
-		Collections.sort(listPriceCarrier);
-		double weight = delivery.getWeight();
-		double priceTemp = 0.0;
-		for (PriceBO priceBO : listPriceCarrier) {
-			double minWeight = priceBO.getMinWeightValue();
-			double maxWeight = priceBO.getMaxWeightValue();
+	private double getPriceForWeight(DeliveryBO delivery, List<PriceBO> listPriceCarrier) {
+		double weightDelivery = delivery.getWeight();
+		double priceForWeight = 0.0;
+		for (PriceBO categoryPriceWeight : listPriceCarrier) {
+			double minWeight = categoryPriceWeight.getMinWeightValue();
+			double maxWeight = categoryPriceWeight.getMaxWeightValue();
 
-			if ((weight > minWeight && weight <= maxWeight) 
-					|| (weight <= minWeight && priceTemp == 0)
-					|| (weight > maxWeight)) {
-				priceTemp = priceBO.getAmount();
+			if ((weightDelivery > minWeight && weightDelivery <= maxWeight) 
+					|| (weightDelivery <= minWeight && priceForWeight == 0)
+					|| (weightDelivery > maxWeight)) {
+				priceForWeight = categoryPriceWeight.getAmount();
 			}
-
 		}
-		price += priceTemp;
-		return price;
+		return priceForWeight;
 	}
 }

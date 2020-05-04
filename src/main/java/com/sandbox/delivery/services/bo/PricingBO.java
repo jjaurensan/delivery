@@ -1,6 +1,7 @@
 package com.sandbox.delivery.services.bo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PricingBO {
@@ -50,6 +51,7 @@ public class PricingBO {
 	}
 
 	public List<PriceBO> getListPrice() {
+		Collections.sort(listPrice);
 		return listPrice;
 	}
 

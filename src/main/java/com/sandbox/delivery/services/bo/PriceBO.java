@@ -50,7 +50,6 @@ public class PriceBO implements Comparable<PriceBO> {
 	}
 	@Override
 	public int compareTo(PriceBO o) {
-		// TODO Auto-generated method stub
 		return (int) (this.minWeightValue - o.minWeightValue);
 	}
 	
