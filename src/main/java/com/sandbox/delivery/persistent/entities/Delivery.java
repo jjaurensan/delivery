@@ -33,6 +33,8 @@ public class Delivery {
 	private int numberOfPackage = 0;
 	
 	private double weight=0;
+	
+	private double price=0;
 
 	public Delivery(Carrier carrier, Customer customer, int numberOfPackage,long weight) {
 		this.createDateDelivery = new Date();
@@ -91,6 +93,14 @@ public class Delivery {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

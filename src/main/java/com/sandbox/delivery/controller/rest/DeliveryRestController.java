@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sandbox.delivery.services.DeliveryService;
 import com.sandbox.delivery.services.bo.DeliveryBO;
+import com.sandbox.delivery.utilities.PriceDelivery;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,6 +26,9 @@ public class DeliveryRestController {
 
 	@Autowired
 	private DeliveryService deliveryService;
+	
+	@Autowired
+	private PriceDelivery priceDelivery;
 
 	@GetMapping(path = "/deliveries")
 	public List<DeliveryBO> getAllDeliveries() {
@@ -35,6 +39,7 @@ public class DeliveryRestController {
 	@ResponseBody
 	public ResponseEntity<DeliveryBO> createDelivery(@RequestBody DeliveryBO delivery,
 			UriComponentsBuilder uriBuilder) {
+		delivery.setPrice(priceDelivery.getDeliveryPrice(delivery));
 		DeliveryBO deliveryCreate = this.deliveryService.create(delivery);
 		URI uri = uriBuilder.path("/delivery/{idDelivery}").buildAndExpand(deliveryCreate.getIdDelivery()).toUri();
 		return ResponseEntity.created(uri).body(deliveryCreate);

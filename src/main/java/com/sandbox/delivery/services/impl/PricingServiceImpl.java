@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sandbox.delivery.mapper.CarrierMapper;
 import com.sandbox.delivery.mapper.PricingMapper;
 import com.sandbox.delivery.persistent.entities.Pricing;
 import com.sandbox.delivery.persistent.repositories.PricingRepository;
@@ -22,6 +23,7 @@ public class PricingServiceImpl implements PricingService {
 	@Transactional
 	public PricingBO create(PricingBO pricingBO) {
 		Pricing p = pricingRepository.save(PricingMapper.PRICING_MAPPER.pricingBoToPricing(pricingBO));
+		
 		return PricingMapper.PRICING_MAPPER.pricingToPricingBO(p);
 	}
 
@@ -38,9 +40,9 @@ public class PricingServiceImpl implements PricingService {
 	}
 
 	@Override
-	public PricingBO getPricingByCarrier(CarrierBO carrierBO) {
-		// TODO Auto-generated method stub
-		return null;
+	public PricingBO getPricingByCarrier(CarrierBO carrierBO) {		
+		Pricing p = pricingRepository.findAllByCarrier(CarrierMapper.INSTANCE.carrierBOToCarrier(carrierBO));
+		return PricingMapper.PRICING_MAPPER.pricingToPricingBO(p);
 	}
 
 	@Override

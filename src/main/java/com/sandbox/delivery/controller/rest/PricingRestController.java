@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sandbox.delivery.services.PricingService;
 import com.sandbox.delivery.services.bo.PricingBO;
+import com.sandbox.delivery.services.impl.PricingServiceImpl;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class PricingRestController {
 
 	@Autowired
-	private PricingService priceService;
+	private PricingServiceImpl priceService;
 
 	@GetMapping(value = "/pricing")
 	public List<PricingBO> getAllPricing() {

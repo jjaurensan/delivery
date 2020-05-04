@@ -30,6 +30,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Transactional
 	public DeliveryBO create(DeliveryBO deliveryBO) {
 		Delivery d = mapper.deliveryBOToDelivery(deliveryBO);
+		
 		if (d.getIdDelivery() == 0) {			
 			d=em.merge(d);
 		} else {

@@ -25,8 +25,7 @@ class PricingServiceTest {
 	
 	@Autowired
 	private PricingService pricingService;
-	@Autowired
-	private PriceService priceService;
+	
 	@Autowired
 	private CarrierService carrierService;
 	
@@ -39,7 +38,7 @@ class PricingServiceTest {
 		carrier = new CarrierBO("Cmainan", "rue 1", "Rue 2", "33320", "Pessac", "0556587272");
 		listPriceBO.add(PriceMapper.PRICE_MAPPER.priceToPriceBO(new Price(5.0, 10, 15)));
 		listPriceBO.add(PriceMapper.PRICE_MAPPER.priceToPriceBO(new Price(6.0, 15, 25)));
-		listPriceBO = priceService.createListPrice(listPriceBO);
+		//listPriceBO = priceService.createListPrice(listPriceBO);
 		carrier = carrierService.create(carrier);
 	}
 

@@ -15,6 +15,8 @@ public class DeliveryBO {
 
 	private double weight = 0;
 
+	private double price = 0;
+
 	public DeliveryBO(CarrierBO carrier, CustomerBO customer, int numberOfPackage, double weight) {
 		this.createDateDelivery = new Date();
 		this.carrier = carrier;
@@ -72,6 +74,14 @@ public class DeliveryBO {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

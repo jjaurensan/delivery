@@ -3,6 +3,7 @@ package com.sandbox.delivery.persistent.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +26,8 @@ public class Pricing {
 	private double arragement;
 
 	private double floor;
-	@OneToMany(fetch = FetchType.EAGER)
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name = "price_carrier", 
 	joinColumns = @JoinColumn(name = "id_carrier"), 
 	inverseJoinColumns = @JoinColumn(name = "id_price"))
