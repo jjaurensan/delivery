@@ -1,6 +1,8 @@
 package com.sandbox.delivery.services.bo;
 
-public class PriceBO {
+import java.util.Comparator;
+
+public class PriceBO implements Comparable<PriceBO> {
 
 	private long idPrice;
 	
@@ -40,6 +42,16 @@ public class PriceBO {
 	}
 	public void setIdPrice(long idPrice) {
 		this.idPrice = idPrice;
+	}
+	@Override
+	public String toString() {
+		return "PriceBO [amount=" + amount + ", minWeightValue=" + minWeightValue + ", maxWeightValue=" + maxWeightValue
+				+ "]";
+	}
+	@Override
+	public int compareTo(PriceBO o) {
+		// TODO Auto-generated method stub
+		return (int) (this.minWeightValue - o.minWeightValue);
 	}
 	
 }

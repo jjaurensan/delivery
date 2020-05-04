@@ -1,5 +1,6 @@
 package com.sandbox.delivery.utilities;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,35 @@ public class PriceDelivery {
 	private PricingService pricingService;
 
 	public double getDeliveryPrice(DeliveryBO delivery) {
+
 		double price = 0.0;
+
 		PricingBO p = pricingService.getPricingByCarrier(delivery.getCarrier());
+
 		if (delivery.getCustomer().isArragement()) {
 			price += p.getArragement();
 		}
-		List<PriceBO> listPriceCarrier = p.getListPrice();
-		for (PriceBO priceBO : listPriceCarrier) {
-			if(delivery.getWeight()>priceBO.getMinWeightValue()&& delivery.getWeight()<= priceBO.getMaxWeightValue()) {
-				price += priceBO.getAmount();
-			}
+
+		if (delivery.getAddress().isFloor()) {
+			price += p.getFloor();
 		}
-		
-			return price;
+
+		List<PriceBO> listPriceCarrier = p.getListPrice();
+		Collections.sort(listPriceCarrier);
+		double weight = delivery.getWeight();
+		double priceTemp = 0.0;
+		for (PriceBO priceBO : listPriceCarrier) {
+			double minWeight = priceBO.getMinWeightValue();
+			double maxWeight = priceBO.getMaxWeightValue();
+
+			if ((weight > minWeight && weight <= maxWeight) 
+					|| (weight <= minWeight && priceTemp == 0)
+					|| (weight > maxWeight)) {
+				priceTemp = priceBO.getAmount();
+			}
+
+		}
+		price += priceTemp;
+		return price;
 	}
 }

@@ -21,27 +21,31 @@ public class Delivery {
 	@Temporal(value = TemporalType.DATE)
 	private Date createDateDelivery;
 
-
-	//@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})	
+	// @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Carrier carrier;
-	
-	//@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})	
-	private Customer customer;
-	
-	private int numberOfPackage = 0;
-	
-	private double weight=0;
-	
-	private double price=0;
 
-	public Delivery(Carrier carrier, Customer customer, int numberOfPackage,long weight) {
+	// @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Customer customer;
+
+	// @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@OneToOne(cascade = { CascadeType.DETACH})
+	private Address address;
+
+	private int numberOfPackage = 0;
+
+	private double weight = 0;
+
+	private double price = 0;
+
+	public Delivery(Carrier carrier, Customer customer, int numberOfPackage, long weight,Address address) {
 		this.createDateDelivery = new Date();
 		this.carrier = carrier;
 		this.customer = customer;
 		this.numberOfPackage = numberOfPackage;
 		this.weight = weight;
+		this.address = address;
 	}
 
 	public Delivery() {
@@ -101,6 +105,14 @@ public class Delivery {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

@@ -61,4 +61,10 @@ public class Price {
 		this.maxWeightValue = maxWeightValue;
 	}
 
+	@Override
+	public String toString() {
+		return "Price [amount=" + amount + ", minWeightValue=" + minWeightValue + ", maxWeightValue=" + maxWeightValue
+				+ "]";
+	}
+
 }

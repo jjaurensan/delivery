@@ -10,6 +10,8 @@ public class DeliveryBO {
 	private CarrierBO carrier;
 
 	private CustomerBO customer;
+	
+	private AddressBO address;
 
 	private int numberOfPackage = 0;
 
@@ -17,12 +19,13 @@ public class DeliveryBO {
 
 	private double price = 0;
 
-	public DeliveryBO(CarrierBO carrier, CustomerBO customer, int numberOfPackage, double weight) {
+	public DeliveryBO(CarrierBO carrier, CustomerBO customer, int numberOfPackage, double weight,AddressBO address) {
 		this.createDateDelivery = new Date();
 		this.carrier = carrier;
 		this.customer = customer;
 		this.numberOfPackage = numberOfPackage;
 		this.weight = weight;
+		this.setAddress(address);
 	}
 
 	public DeliveryBO() {
@@ -82,6 +85,14 @@ public class DeliveryBO {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public AddressBO getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressBO address) {
+		this.address = address;
 	}
 
 }
