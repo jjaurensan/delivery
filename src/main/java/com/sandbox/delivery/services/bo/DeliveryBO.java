@@ -1,11 +1,11 @@
 package com.sandbox.delivery.services.bo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class DeliveryBO {
 	private long idDelivery;
 
-	private Date createDateDelivery;
+	private LocalDate createDateDelivery;
 
 	private CarrierBO carrier;
 
@@ -20,7 +20,7 @@ public class DeliveryBO {
 	private double price = 0;
 
 	public DeliveryBO(CarrierBO carrier, CustomerBO customer, int numberOfPackage, double weight,AddressBO address) {
-		this.createDateDelivery = new Date();
+		this.createDateDelivery =LocalDate.now();
 		this.carrier = carrier;
 		this.customer = customer;
 		this.numberOfPackage = numberOfPackage;
@@ -39,11 +39,11 @@ public class DeliveryBO {
 		this.idDelivery = id;
 	}
 
-	public Date getCreateDateDelivery() {
+	public LocalDate getCreateDateDelivery() {
 		return createDateDelivery;
 	}
 
-	public void setCreateDateDelivery(Date createDateDelivery) {
+	public void setCreateDateDelivery(LocalDate createDateDelivery) {
 		this.createDateDelivery = createDateDelivery;
 	}
 

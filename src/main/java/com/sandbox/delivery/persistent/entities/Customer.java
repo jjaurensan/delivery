@@ -99,7 +99,7 @@ public class Customer{
 	public void setArragement(boolean arragement) {
 		this.arragement = arragement;
 	}
-
+/*
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,5 +133,5 @@ public class Customer{
 			return false;
 		return true;
 	}
-
+*/
 }

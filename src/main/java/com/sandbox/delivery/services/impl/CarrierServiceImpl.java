@@ -33,9 +33,7 @@ public class CarrierServiceImpl implements CarrierService {
 	}
 
 	public CarrierBO update(CarrierBO carrierBO) {
-		Carrier carrier = CarrierMapper.INSTANCE.carrierBOToCarrier(carrierBO);
-		carrierRepository.save(carrier);
-		return CarrierMapper.INSTANCE.carrierToCarrierBO(carrier);
+		return create(carrierBO);
 	}
 
 	public List<CarrierBO> getAll() {

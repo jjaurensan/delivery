@@ -76,4 +76,11 @@ public class DeliveryServiceTest {
 		assertEquals(deliveryBO.getNumberOfPackage(), result.getNumberOfPackage());
 		assertEquals(15, result.getNumberOfPackage());
 	}
+	@Test
+	void countDelivery_countDeliveryInDatabase() throws Exception {
+		deliveryBO = new DeliveryBO(carrier, customer, 5,12.25,customer.getCustomerListDeliveryAddress().get(0));
+		deliveryBO = deliveryService.create(deliveryBO);
+		assertEquals(deliveryRepository.findAll().size(), deliveryService.count());
+	}
+	
 }

@@ -13,8 +13,7 @@ public interface PriceMapper {
 
 	static final PriceMapper PRICE_MAPPER = Mappers.getMapper(PriceMapper.class);
 	
-	PriceBO priceToPriceBO(Price price);
-	
+	PriceBO priceToPriceBO(Price price);	
 	Price priceBOToPrice(PriceBO priceBo);
 	
 	List <PriceBO> listPriceToListPriceBO(List<Price> listPrice);

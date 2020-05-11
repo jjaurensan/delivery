@@ -26,20 +26,20 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
+	@Transactional
 	public PriceBO update(PriceBO priceBO) {
-		Price p = priceRepository.save(PriceMapper.PRICE_MAPPER.priceBOToPrice(priceBO));
-		return PriceMapper.PRICE_MAPPER.priceToPriceBO(p);
+		return create(priceBO);
 	}
 
 	@Override
 	public List<PriceBO> createListPrice(List<PriceBO> listPriceBO) {
 		List<Price> p = PriceMapper.PRICE_MAPPER.listPriceBOToListPrice(listPriceBO);
-		return PriceMapper.PRICE_MAPPER.listPriceToListPriceBO((List<Price>) priceRepository.saveAll(p));
+		return PriceMapper.PRICE_MAPPER.listPriceToListPriceBO(priceRepository.saveAll(p));
 	}
 
 	@Override
 	public List<PriceBO> getAllPrice() {
-		return PriceMapper.PRICE_MAPPER.listPriceToListPriceBO((List<Price>) priceRepository.findAll());
+		return PriceMapper.PRICE_MAPPER.listPriceToListPriceBO(priceRepository.findAll());
 	}
 
 }

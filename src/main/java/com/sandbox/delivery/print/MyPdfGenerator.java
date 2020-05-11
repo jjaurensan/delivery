@@ -27,7 +27,7 @@ public class MyPdfGenerator {
 	final Logger logger = LoggerFactory.getLogger(MyPdfGenerator.class);
 	// 72 points = 1 inch = 25.4 mm
 
-	private float convertMmtoPts(float measure) {		
+	private float convertMmtoPts(float measure) {
 		return measure * (72f / 25.4f);
 	}
 
@@ -35,10 +35,9 @@ public class MyPdfGenerator {
 
 		final float MARGIN = convertMmtoPts(10f);
 
-		try (	PdfWriter writer = new PdfWriter(DEST);
+		try (PdfWriter writer = new PdfWriter(DEST);
 				PdfDocument pdf = new PdfDocument(writer);
-				Document document = new Document(pdf, PageSize.A4);) 
-			{
+				Document document = new Document(pdf, PageSize.A4);) {
 			File file = new File(DEST);
 			file.getParentFile().mkdirs();
 
@@ -47,21 +46,25 @@ public class MyPdfGenerator {
 			// Create a PdfFont
 			PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 			PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+			
 
-			// table
+			
 			Table tableHaut = new Table(UnitValue.createPercentArray(new float[] { 2, 3 })).useAllAvailableWidth();
 			tableHaut.setFont(bold);
 			tableHaut.addCell("AQUITAINE PAPETERIE\n" + "11 Rue Suffren\n" + "33083 BORDEAUX CEDEX");
-			tableHaut.addCell("Numero Livraison : ");
+			tableHaut.addCell("Vous etes livré par : \n" + allDelivery.get(0).getCarrier().getName() + "\n"
+					+ allDelivery.get(0).getCarrier().getStreetOne() + "\n"
+					+ allDelivery.get(0).getCarrier().getStreetTwo() + "\n" + allDelivery.get(0).getCarrier().getCity()
+					+ " " + allDelivery.get(0).getCarrier().getCity());
 
 			// Table
-			Table table = new Table(UnitValue.createPercentArray(new float[] { 1, 3, 4, 4, 1, 3 }))
+			Table table = new Table(UnitValue.createPercentArray(new float[] { 1, 2,  5, 1, 3 }))
 					.useAllAvailableWidth();
 
 			// insert data
 			table.addHeaderCell("id").setFont(bold);
 			table.addHeaderCell("Date").setFont(bold);
-			table.addHeaderCell("Livreur").setFont(bold);
+			//table.addHeaderCell("Livreur").setFont(bold);
 			table.addHeaderCell("Client").setFont(bold);
 			table.addHeaderCell("Nb Colis").setFont(bold);
 			table.addHeaderCell("Signature").setFont(bold);
@@ -70,7 +73,7 @@ public class MyPdfGenerator {
 
 				table.addCell(new Cell().add(new Paragraph(String.valueOf(delivery.getIdDelivery()))).setFont(font));
 				table.addCell(new Cell().add(new Paragraph(delivery.getCreateDateDelivery().toString())).setFont(font));
-				table.addCell(new Cell().add(new Paragraph(delivery.getCarrier().getName())).setFont(font));
+				//table.addCell(new Cell().add(new Paragraph(delivery.getCarrier().getName())).setFont(font));
 
 				table.addCell(
 						new Cell()
@@ -84,9 +87,10 @@ public class MyPdfGenerator {
 				table.addCell(new Cell().add(new Paragraph("")).setFont(font));
 			}
 			// end data
-			table.addCell(tableHaut);
-
-			document.add(table);
+			// table.addCell(tableHaut);
+			document.add(tableHaut);
+			document.add(table.setFontSize(8));
+			
 
 		} catch (FileNotFoundException e) {
 			logger.error("MyPDFGenerator", e);

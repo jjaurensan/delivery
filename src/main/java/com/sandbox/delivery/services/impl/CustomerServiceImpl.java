@@ -36,10 +36,9 @@ public class CustomerServiceImpl implements CustomerService {
 				.customerToCustomerBO(customerRepository.findByCustomerNumber(customerNumber));
 	}
 	
+	@Transactional
 	public CustomerBO updateCustomer(CustomerBO customerBO) {
-		Customer c = CustomerMapper.INSTANCE.customerBOToCustomer(customerBO);
-		customerBO = CustomerMapper.INSTANCE.customerToCustomerBO(customerRepository.save(c));
-		return customerBO;		
+		return create(customerBO);		
 	}
 	@Transactional
 	public void deleteCustomerById(long idCustomer) {

@@ -1,6 +1,7 @@
 package com.sandbox.delivery.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,19 +29,19 @@ public class AddressServiceImpl implements AddressService {
 		List<Address> a = AddressMapper.INSTANCE.listAddressBOToListAddress(listAddressBO);		
 		return AddressMapper.INSTANCE.listAddressToListAddressBO((List<Address>) addressRepository.saveAll(a));
 	}
-
+	@Transactional
 	public AddressBO update(AddressBO addressBO) {
-		Address a = addressRepository.save(AddressMapper.INSTANCE.addressBOToAddress(addressBO));
-		return AddressMapper.INSTANCE.addressToAddressBO(a);
+		return create(addressBO);
 	}
 
 	public List<AddressBO> getAllAddress() {		
 		return AddressMapper.INSTANCE.listAddressToListAddressBO((List<Address>) addressRepository.findAll()) ;
 	}
 	
-	public AddressBO getAddressById(long idAddress) {
-		AddressBO result = AddressMapper.INSTANCE.addressToAddressBO(addressRepository.findById(idAddress).get());
-		return result;
+	public AddressBO getAddressById(long idAddress) {	
+		Optional<Address> value = addressRepository.findById(idAddress);
+		Address addressValue=value.orElse(new Address());	
+		return AddressMapper.INSTANCE.addressToAddressBO(addressValue);
 	}
 	@Transactional
 	public void deleteAdrress(AddressBO addressBO) {

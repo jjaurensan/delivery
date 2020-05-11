@@ -2,6 +2,7 @@ package com.sandbox.delivery.services.impl;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,15 +29,16 @@ public class PricingServiceImpl implements PricingService {
 	}
 
 	@Override
+	@Transactional
 	public PricingBO update(PricingBO pricingBO) {
-		Pricing p = pricingRepository.save(PricingMapper.PRICING_MAPPER.pricingBoToPricing(pricingBO));
-		return PricingMapper.PRICING_MAPPER.pricingToPricingBO(p);
+		return create(pricingBO);
 	}
 
 	@Override
 	public PricingBO getPricingById(long idPrincingBO) {
-		Pricing p = pricingRepository.findById(idPrincingBO).get();
-		return PricingMapper.PRICING_MAPPER.pricingToPricingBO(p);
+		Optional<Pricing> value = pricingRepository.findById(idPrincingBO);
+		Pricing pricingValue = value.orElse(new Pricing());
+		return PricingMapper.PRICING_MAPPER.pricingToPricingBO(pricingValue);
 	}
 
 	@Override

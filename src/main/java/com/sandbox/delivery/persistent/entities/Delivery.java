@@ -1,6 +1,6 @@
 package com.sandbox.delivery.persistent.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,8 +18,8 @@ public class Delivery {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idDelivery;
 
-	@Temporal(value = TemporalType.DATE)
-	private Date createDateDelivery;
+	//@Temporal(value = TemporalType.DATE)
+	private LocalDate createDateDelivery;
 
 	// @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -40,7 +40,7 @@ public class Delivery {
 	private double price = 0;
 
 	public Delivery(Carrier carrier, Customer customer, int numberOfPackage, long weight,Address address) {
-		this.createDateDelivery = new Date();
+		this.createDateDelivery = LocalDate.now();
 		this.carrier = carrier;
 		this.customer = customer;
 		this.numberOfPackage = numberOfPackage;
@@ -59,11 +59,11 @@ public class Delivery {
 		this.idDelivery = id;
 	}
 
-	public Date getCreateDateDelivery() {
+	public LocalDate getCreateDateDelivery() {
 		return createDateDelivery;
 	}
 
-	public void setCreateDateDelivery(Date createDateDelivery) {
+	public void setCreateDateDelivery(LocalDate createDateDelivery) {
 		this.createDateDelivery = createDateDelivery;
 	}
 

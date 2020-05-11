@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sandbox.delivery.print.MyPdfGenerator;
 import com.sandbox.delivery.services.CustomerService;
@@ -63,13 +64,14 @@ public class Controller {
 		return "home";
 	}
 
-	@GetMapping("/pdf")
-	public String homePageGeneratePDF(Model model) {
+	@GetMapping("/pdf/{idCarrier}")
+	public String homePageGeneratePDF(Model model,@PathVariable long idCarrier) {
 		model.addAttribute("appName", appName);
 		model.addAttribute("localDateTime", LocalDateTime.now());
-		MyPdfGenerator monDoc;
+		
 		try {
-			 monDoc = new MyPdfGenerator(deliveryService.getAll());
+			MyPdfGenerator monDoc;
+			 monDoc = new MyPdfGenerator(deliveryService.getAllByIdCarrier(idCarrier));
 		} catch (IOException e) {
 			logger.error("context", e);
 		}

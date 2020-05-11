@@ -73,6 +73,8 @@ public class CustomerBO {
 	public void setArragement(boolean arragement) {
 		this.arragement = arragement;
 	}
+	
+	/*
 
 	@Override
 	public int hashCode() {
@@ -126,5 +128,5 @@ public class CustomerBO {
 		}
 		return true;
 	}
-
+*/
 }
