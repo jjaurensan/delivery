@@ -52,4 +52,10 @@ public class CarrierServiceImpl implements CarrierService {
 		carrierRepository.deleteById(idCarrier);
 	}
 
+	@Override
+	public void deleteAll() {
+		carrierRepository.deleteAll();
+		
+	}
+
 }

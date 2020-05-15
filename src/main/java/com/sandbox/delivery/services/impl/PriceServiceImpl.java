@@ -42,4 +42,10 @@ public class PriceServiceImpl implements PriceService {
 		return PriceMapper.PRICE_MAPPER.listPriceToListPriceBO(priceRepository.findAll());
 	}
 
+	@Override
+	public void deleteAll() {
+		priceRepository.deleteAll();
+		
+	}
+
 }

@@ -17,4 +17,6 @@ public interface CustomerService {
 
 	public void deleteCustomerByCustomerNumber(String customerNumber);
 
+	public void deleteAll();
+
 }

@@ -13,6 +13,8 @@ public interface PriceService {
 	List<PriceBO> createListPrice(List<PriceBO> listPriceBO);
 	
 	List<PriceBO> getAllPrice();
+
+	void deleteAll();
 	
 	
 }

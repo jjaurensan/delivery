@@ -1,6 +1,6 @@
 package com.sandbox.delivery.services.impl;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -67,7 +67,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	}
 
 	@Override
-	public List<DeliveryBO> findAllByCreateDateDelivery(Date createDateDelivery) {
+	public List<DeliveryBO> findAllByCreateDateDelivery(LocalDate createDateDelivery) {
 		return MAPPER.listDeliveryToListDeliveryBO(deliveryRepository.findAllByCreateDateDelivery(createDateDelivery));
 	}
 
@@ -76,4 +76,18 @@ public class DeliveryServiceImpl implements DeliveryService {
 		 Carrier carrier = CarrierMapper.INSTANCE.carrierBOToCarrier(carrierService.getById(idCarrier));
 		return MAPPER.listDeliveryToListDeliveryBO(deliveryRepository.findAllByCarrier(carrier));
 	}
+
+	@Override
+	public void deleteAll() {
+		deliveryRepository.deleteAll();
+		
+	}
+
+	@Override
+	public List<DeliveryBO> findAllByCarrierAndCreateDateDelivery(long idCarrier, LocalDate createDateDelivery) {
+		Carrier carrier = CarrierMapper.INSTANCE.carrierBOToCarrier(carrierService.getById(idCarrier));		
+		return MAPPER.listDeliveryToListDeliveryBO(deliveryRepository.findAllByCarrierAndCreateDateDelivery(carrier, createDateDelivery));
+	}
+
+	
 }

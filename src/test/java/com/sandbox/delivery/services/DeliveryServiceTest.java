@@ -2,6 +2,8 @@ package com.sandbox.delivery.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,6 +83,18 @@ public class DeliveryServiceTest {
 		deliveryBO = new DeliveryBO(carrier, customer, 5,12.25,customer.getCustomerListDeliveryAddress().get(0));
 		deliveryBO = deliveryService.create(deliveryBO);
 		assertEquals(deliveryRepository.findAll().size(), deliveryService.count());
+	}
+	
+	@Test
+	void findAllByCarrierAndCreateDateDelivery() throws Exception {
+		deliveryBO = new DeliveryBO(carrier, customer, 5,12.5,customer.getCustomerListDeliveryAddress().get(0));
+		deliveryBO = deliveryService.create(deliveryBO);		
+		Date date =Date.valueOf(LocalDate.now());
+		logger.info("date delivery = " +deliveryBO.getCreateDateDelivery() + "   Date :"+date.toString() );
+
+		List<DeliveryBO> actualNumberOfDelivery= deliveryService.findAllByCreateDateDelivery(deliveryBO.getCreateDateDelivery());
+		assertEquals(1, actualNumberOfDelivery.size());
+		
 	}
 	
 }

@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Delivery {
@@ -40,6 +38,7 @@ public class Delivery {
 	private double price = 0;
 
 	public Delivery(Carrier carrier, Customer customer, int numberOfPackage, long weight,Address address) {
+		//this.createDateDelivery = new Date(Calendar.getInstance().getTime().getTime());
 		this.createDateDelivery = LocalDate.now();
 		this.carrier = carrier;
 		this.customer = customer;

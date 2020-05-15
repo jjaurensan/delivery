@@ -48,4 +48,10 @@ public class AddressServiceImpl implements AddressService {
 		Address a = AddressMapper.INSTANCE.addressBOToAddress(addressBO);
 		addressRepository.delete(a);
 	}
+
+	@Override
+	public void deleteAll() {
+		addressRepository.deleteAll();
+		
+	}
 }

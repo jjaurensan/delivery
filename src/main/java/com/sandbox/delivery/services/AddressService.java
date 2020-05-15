@@ -17,4 +17,6 @@ public interface AddressService {
 	AddressBO getAddressById(long idAddress);
 
 	void deleteAdrress(AddressBO addressBO);
+
+	void deleteAll();
 }

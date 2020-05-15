@@ -3,6 +3,7 @@ package com.sandbox.delivery;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,17 +66,22 @@ public class Controller {
 		return "home";
 	}
 
-	@GetMapping("/pdf/{idCarrier}")
-	public String homePageGeneratePDF(Model model,@PathVariable long idCarrier) {
+	@GetMapping("/pdf/{idCarrier}/{stringDate}")
+	public String homePageGeneratePDF(Model model, @PathVariable("idCarrier") long idCarrier,
+			@PathVariable("stringDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate stringDate) {
 		model.addAttribute("appName", appName);
 		model.addAttribute("localDateTime", LocalDateTime.now());
-		
+		// new MyPdfGenerator(deliveryService.getAllByIdCarrier(idCarrier));
+		// java.sql.Date date = java.sql.Date.valueOf(stringDate);
 		try {
-			MyPdfGenerator monDoc;
-			 monDoc = new MyPdfGenerator(deliveryService.getAllByIdCarrier(idCarrier));
-		} catch (IOException e) {
+
+			new MyPdfGenerator(deliveryService.findAllByCarrierAndCreateDateDelivery(idCarrier, stringDate));
+		} catch (Exception e) {
 			logger.error("context", e);
+		} finally {
+
 		}
+
 		return "home";
 	}
 }

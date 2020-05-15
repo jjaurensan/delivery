@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,12 +33,10 @@ public class Statistic {
 		return amount;
 	}
 
-	public double getTotalAmountOfDeliveryForDate(LocalDate date) {
+	public double getTotalAmountOfDeliveryForDate(LocalDate testDate) {
 		double amount = 0.0;
-		for (DeliveryBO deliveryBO : deliveryService.getAll()) {
-			if (deliveryBO.getCreateDateDelivery().toString().equals(date.toString())) {
-				amount += deliveryBO.getPrice();
-			}
+		for (DeliveryBO deliveryBO : deliveryService.findAllByCreateDateDelivery(testDate)) {
+				amount += deliveryBO.getPrice();			
 		}
 		return amount;
 	}

@@ -1,6 +1,6 @@
 package com.sandbox.delivery.persistent.repositories;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,11 +12,14 @@ import com.sandbox.delivery.persistent.entities.Delivery;
 @Repository
 public interface DeliveryRepository  extends JpaRepository<Delivery, Long>{
 
-	List<Delivery> findAllByCreateDateDelivery(Date createDateDelivery);
+	List<Delivery> findAllByCreateDateDelivery(LocalDate createDateDelivery);
 	
-	List<Delivery> findAllByCreateDateDeliveryBetween(Date createDateDeliveryStart,Date createDateDeliveryEnd);
+	
+	List<Delivery> findAllByCreateDateDeliveryBetween(LocalDate createDateDeliveryStart,LocalDate localDate);
 		
 	List<Delivery> findAllByCarrier(Carrier carrier);
+	
+	List<Delivery> findAllByCarrierAndCreateDateDelivery(Carrier carrier,LocalDate createDateDelivery);
 	
 	long count();
 

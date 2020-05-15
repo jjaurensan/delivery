@@ -57,4 +57,9 @@ public class PricingServiceImpl implements PricingService {
 	public void deletePricingById(long idPricingBO) {
 		pricingRepository.deleteById(idPricingBO);		
 	}
+
+	@Override
+	public void deleteAll() {
+		pricingRepository.deleteAll();
+	}
 }

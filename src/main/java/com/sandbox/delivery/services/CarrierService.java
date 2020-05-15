@@ -17,4 +17,6 @@ public interface CarrierService {
 	CarrierBO getById(long idCarrierBO);
 
 	void deleteById(long idCarrierBO);
+
+	void deleteAll();
 }

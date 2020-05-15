@@ -19,4 +19,6 @@ public interface PricingService {
 	
 	void deletePricingById(long idPricingBO);
 
+	void deleteAll();
+
 }
