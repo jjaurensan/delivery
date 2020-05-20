@@ -1,8 +1,8 @@
 package com.sandbox.delivery.services;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,8 @@ import com.sandbox.delivery.services.bo.DeliveryBO;
 public class DeliveryServiceTest {
 
 	final Logger logger = LoggerFactory.getLogger(DeliveryServiceTest.class);
-
+	
+	
 	@Autowired
 	private DeliveryRepository deliveryRepository;
 
@@ -51,6 +52,8 @@ public class DeliveryServiceTest {
 		customer = new CustomerBO("335AURES", addressList, "0558567272", "john doe", false);
 		carrier = carrierService.create(carrier);
 		customer = customerService.create(customer);
+		deliveryBO = new DeliveryBO(carrier, customer, 5,12.25,customer.getCustomerListDeliveryAddress().get(0));
+		deliveryBO = deliveryService.create(deliveryBO);
 	}
 
 	@AfterEach
@@ -59,9 +62,7 @@ public class DeliveryServiceTest {
 	}
 
 	@Test
-	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {
-		deliveryBO = new DeliveryBO(carrier, customer, 5,12.25,customer.getCustomerListDeliveryAddress().get(0));
-		deliveryBO = deliveryService.create(deliveryBO);
+	void createDelivery_CreateNewDeliveryInDatabase() throws Exception {		
 		Optional<Delivery> result = deliveryRepository.findById(deliveryBO.getIdDelivery());
 		assertTrue(result.isPresent());
 		assertEquals(deliveryBO.getCustomer().getCustomerNumber(), result.get().getCustomer().getCustomerNumber());
@@ -69,9 +70,7 @@ public class DeliveryServiceTest {
 	}
 
 	@Test
-	void updateDelivery_UpdateDeliveryInDatabase() throws Exception {
-		deliveryBO = new DeliveryBO(carrier, customer, 5,12.5,customer.getCustomerListDeliveryAddress().get(0));
-		deliveryBO = deliveryService.create(deliveryBO);
+	void updateDelivery_UpdateDeliveryInDatabase() throws Exception {		
 		deliveryBO.setNumberOfPackage(15);
 		DeliveryBO result = deliveryService.createOrUpdate(deliveryBO);
 		assertEquals(deliveryBO.getIdDelivery(), result.getIdDelivery());
@@ -79,21 +78,26 @@ public class DeliveryServiceTest {
 		assertEquals(15, result.getNumberOfPackage());
 	}
 	@Test
-	void countDelivery_countDeliveryInDatabase() throws Exception {
-		deliveryBO = new DeliveryBO(carrier, customer, 5,12.25,customer.getCustomerListDeliveryAddress().get(0));
-		deliveryBO = deliveryService.create(deliveryBO);
+	void countDelivery_countDeliveryInDatabase() throws Exception {		
 		assertEquals(deliveryRepository.findAll().size(), deliveryService.count());
 	}
 	
 	@Test
 	void findAllByCarrierAndCreateDateDelivery() throws Exception {
-		deliveryBO = new DeliveryBO(carrier, customer, 5,12.5,customer.getCustomerListDeliveryAddress().get(0));
-		deliveryBO = deliveryService.create(deliveryBO);		
-		Date date =Date.valueOf(LocalDate.now());
-		logger.info("date delivery = " +deliveryBO.getCreateDateDelivery() + "   Date :"+date.toString() );
-
-		List<DeliveryBO> actualNumberOfDelivery= deliveryService.findAllByCreateDateDelivery(deliveryBO.getCreateDateDelivery());
-		assertEquals(1, actualNumberOfDelivery.size());
+		
+		DeliveryBO deliveryBOO = new DeliveryBO(carrier, customer, 8,2.5,customer.getCustomerListDeliveryAddress().get(0));
+		//deliveryBOO.setCreateDateDelivery(deliveryBOO.getCreateDateDelivery().minusDays(1));
+		deliveryBOO = deliveryService.create(deliveryBOO);
+		
+		LocalDate dateTest = LocalDate.now();
+		logger.info("date delivery = " +deliveryBO.getCreateDateDelivery() + "   Date :"+dateTest.toString() );
+		
+		List<DeliveryBO> actualNumberOfDelivery= deliveryService.findAllByCarrierAndCreateDateDelivery(carrier.getIdCarrier(), dateTest);
+		//List<Delivery> actualNumberOfDelivery=deliveryRepository.findAllByCarrierAndCreateDateDelivery(carrier, dateTest);
+		
+		assertEquals(deliveryBO.getIdDelivery(), actualNumberOfDelivery.get(0).getIdDelivery());
+		assertEquals(2, actualNumberOfDelivery.size());
+		
 		
 	}
 	

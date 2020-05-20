@@ -38,7 +38,6 @@ public class Delivery {
 	private double price = 0;
 
 	public Delivery(Carrier carrier, Customer customer, int numberOfPackage, long weight,Address address) {
-		//this.createDateDelivery = new Date(Calendar.getInstance().getTime().getTime());
 		this.createDateDelivery = LocalDate.now();
 		this.carrier = carrier;
 		this.customer = customer;

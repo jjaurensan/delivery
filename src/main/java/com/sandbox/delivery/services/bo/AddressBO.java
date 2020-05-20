@@ -13,7 +13,8 @@ public class AddressBO {
 	public AddressBO() {
 	}
 
-	public AddressBO(String streetOne, String streetTwo, String streetThree, String zipCode, String city, boolean floor) {
+	public AddressBO(String streetOne, String streetTwo, String streetThree, String zipCode, String city,
+			boolean floor) {
 		super();
 		this.streetOne = streetOne;
 		this.streetTwo = streetTwo;
@@ -21,6 +22,26 @@ public class AddressBO {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.floor = floor;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append(streetOne);
+		builder.append("\n");
+		if (streetTwo != null || !streetTwo.isBlank()) {
+			builder.append(streetTwo);
+		}
+		if (streetThree != null || !streetThree.isBlank()) {
+			builder.append(streetThree);
+			builder.append("\n");
+		}
+		builder.append(zipCode);
+		builder.append(" ");
+		builder.append(city);
+
+		return builder.toString();
 	}
 
 	public long getIdAddress() {

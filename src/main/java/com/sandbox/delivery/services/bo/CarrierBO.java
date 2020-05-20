@@ -26,6 +26,22 @@ public class CarrierBO implements Serializable {
 	public CarrierBO() {
 	}
 
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();		
+		builder.append(name);
+		builder.append("\n");
+		builder.append(streetOne);
+		builder.append("\n");
+		builder.append(streetTwo);
+		builder.append("\n");
+		builder.append(cityCode);
+		builder.append(" ");
+		builder.append(city);
+		return builder.toString();
+	}
+
 	public long getIdCarrier() {
 		return idCarrier;
 	}

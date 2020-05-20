@@ -1,11 +1,16 @@
 package com.sandbox.delivery;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,16 +18,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sandbox.delivery.print.MyPdfGenerator;
 import com.sandbox.delivery.services.CustomerService;
 import com.sandbox.delivery.services.DeliveryService;
 import com.sandbox.delivery.services.bo.AddressBO;
 import com.sandbox.delivery.services.bo.CustomerBO;
+import com.sandbox.delivery.services.bo.DeliveryBO;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -30,7 +42,7 @@ public class Controller {
 	final Logger logger = LoggerFactory.getLogger(Controller.class);
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 
 	@Autowired
 	private DeliveryService deliveryService;
@@ -71,17 +83,33 @@ public class Controller {
 			@PathVariable("stringDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate stringDate) {
 		model.addAttribute("appName", appName);
 		model.addAttribute("localDateTime", LocalDateTime.now());
-		// new MyPdfGenerator(deliveryService.getAllByIdCarrier(idCarrier));
-		// java.sql.Date date = java.sql.Date.valueOf(stringDate);
+		List<DeliveryBO> listDelivery = deliveryService.findAllByCarrierAndCreateDateDelivery(idCarrier,
+				stringDate.plusDays(1));
+
 		try {
 
-			new MyPdfGenerator(deliveryService.findAllByCarrierAndCreateDateDelivery(idCarrier, stringDate));
+			new MyPdfGenerator(listDelivery);
 		} catch (Exception e) {
 			logger.error("context", e);
-		} finally {
-
-		}
-
+			logger.error(stringDate.toString(), e);
+		} 
 		return "home";
+	}
+	
+	
+	@ResponseBody 
+	@GetMapping("/file/{nameFile}")
+	public ResponseEntity<InputStreamResource>  helloWorld(@PathVariable("nameFile") String nameFile) throws FileNotFoundException {
+		File file = new File("results/pdf/"+nameFile);
+		InputStream inputStream = new FileInputStream(file);
+		HttpHeaders responseHeaders = new HttpHeaders();
+        InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+        responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
+        // just in case you need to support browsers
+        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename="+nameFile));
+        return new ResponseEntity<> (inputStreamResource,
+                                   responseHeaders,
+                                   HttpStatus.OK);
+		
 	}
 }

@@ -19,8 +19,9 @@ public interface DeliveryRepository  extends JpaRepository<Delivery, Long>{
 		
 	List<Delivery> findAllByCarrier(Carrier carrier);
 	
-	List<Delivery> findAllByCarrierAndCreateDateDelivery(Carrier carrier,LocalDate createDateDelivery);
-	
+		
 	long count();
 
+	List<Delivery> findAllByCarrierAndCreateDateDelivery(Carrier carrier,LocalDate createDateDelivery);
+	
 }

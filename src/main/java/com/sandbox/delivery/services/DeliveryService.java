@@ -24,6 +24,7 @@ public interface DeliveryService {
 
 	List<DeliveryBO> findAllByCreateDateDelivery(LocalDate createDateDelivery);
 
+	
 	List<DeliveryBO> findAllByCarrierAndCreateDateDelivery(long idCarrier,LocalDate createDateDelivery);
 
 }
