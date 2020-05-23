@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Delivery {
 
@@ -17,6 +19,7 @@ public class Delivery {
 	private long idDelivery;
 
 	//@Temporal(value = TemporalType.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "Europe/Paris")
 	private LocalDate createDateDelivery;
 
 	// @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })

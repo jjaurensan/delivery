@@ -2,15 +2,18 @@ package com.sandbox.delivery.services.bo;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class DeliveryBO {
 	private long idDelivery;
 
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "Europe/Paris")
 	private LocalDate createDateDelivery;
 
 	private CarrierBO carrier;
 
 	private CustomerBO customer;
-	
+
 	private AddressBO address;
 
 	private int numberOfPackage = 0;
@@ -19,13 +22,13 @@ public class DeliveryBO {
 
 	private double price = 0;
 
-	public DeliveryBO(CarrierBO carrier, CustomerBO customer, int numberOfPackage, double weight,AddressBO address) {
-		this.createDateDelivery =LocalDate.now();
+	public DeliveryBO(CarrierBO carrier, CustomerBO customer, int numberOfPackage, double weight, AddressBO address) {
+		this.createDateDelivery = LocalDate.now();
 		this.carrier = carrier;
 		this.customer = customer;
 		this.numberOfPackage = numberOfPackage;
 		this.weight = weight;
-		this.setAddress(address);
+		this.address = address;
 	}
 
 	public DeliveryBO() {

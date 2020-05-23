@@ -1,8 +1,11 @@
 package com.sandbox.delivery.controller.rest;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,13 +37,19 @@ public class DeliveryRestController {
 	public List<DeliveryBO> getAllDeliveries() {
 		return deliveryService.getAll();
 	}
+	
+	final Logger logger = LoggerFactory.getLogger(DeliveryRestController.class);
 
 	@PostMapping(path = "/delivery/")
 	@ResponseBody
 	public ResponseEntity<DeliveryBO> createDelivery(@RequestBody DeliveryBO delivery,
 			UriComponentsBuilder uriBuilder) {
-		delivery.setPrice(priceDelivery.getDeliveryPrice(delivery));
+		logger.warn("Valeur de date " + delivery.getCreateDateDelivery());
+		delivery.setCreateDateDelivery(LocalDate.parse(delivery.getCreateDateDelivery().toString()));
+		double price = priceDelivery.getDeliveryPrice(delivery);
+		delivery.setPrice(price);
 		DeliveryBO deliveryCreate = this.deliveryService.create(delivery);
+		logger.warn("Valeur de date " + deliveryCreate.getCreateDateDelivery());
 		URI uri = uriBuilder.path("/delivery/{idDelivery}").buildAndExpand(deliveryCreate.getIdDelivery()).toUri();
 		return ResponseEntity.created(uri).body(deliveryCreate);
 	}
