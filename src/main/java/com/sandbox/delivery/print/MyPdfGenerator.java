@@ -26,7 +26,7 @@ import com.sandbox.delivery.services.bo.DeliveryBO;
 
 public class MyPdfGenerator {
 
-	private static final String DATE_FILE_NAME = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+	//private static final String DATE_FILE_NAME = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 	private static final String DESTPATH = "results/pdf/";
 	private static final String SOCIETY = "AQUITAINE PAPETERIE\n" + "11 Rue Suffren\n" + "33083 BORDEAUX CEDEX";
 
@@ -37,14 +37,14 @@ public class MyPdfGenerator {
 		return measure * (72f / 25.4f);
 	}
 	
-	public MyPdfGenerator(List<DeliveryBO> allDelivery) throws IOException {
+	public MyPdfGenerator(LocalDate dateDelivery,List<DeliveryBO> allDelivery) throws IOException {
 		// Create a PdfFont
 		PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 		PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
 
 		final float MARGIN = convertMmtoPts(10f);
 
-		final String DEST = DESTPATH + DATE_FILE_NAME + "_" + allDelivery.get(0).getCarrier().getName() + ".pdf";
+		final String DEST = DESTPATH + dateDelivery.toString() + "_" + allDelivery.get(0).getCarrier().getName() + ".pdf";
 		try (PdfWriter writer = new PdfWriter(DEST);
 				PdfDocument pdf = new PdfDocument(writer);
 				Document document = new Document(pdf, PageSize.A4);) {
@@ -108,7 +108,7 @@ public class MyPdfGenerator {
 		PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
 		final float MARGIN = convertMmtoPts(0f);
 
-		final String DEST = DESTPATH + "label/" + DATE_FILE_NAME + "_" + delivery.getIdDelivery() + ".pdf";
+		final String DEST = DESTPATH + "label/" + delivery.getCreateDateDelivery() + "_" + delivery.getIdDelivery() + ".pdf";
 
 		try (PdfWriter writer = new PdfWriter(DEST);
 				PdfDocument pdf = new PdfDocument(writer);

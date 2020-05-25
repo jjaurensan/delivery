@@ -25,11 +25,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sandbox.delivery.print.MyPdfGenerator;
+import com.sandbox.delivery.services.CarrierService;
 import com.sandbox.delivery.services.CustomerService;
 import com.sandbox.delivery.services.DeliveryService;
 import com.sandbox.delivery.services.bo.AddressBO;
@@ -37,6 +39,7 @@ import com.sandbox.delivery.services.bo.CustomerBO;
 import com.sandbox.delivery.services.bo.DeliveryBO;
 
 @org.springframework.stereotype.Controller
+@CrossOrigin(origins = "http://localhost:4200")
 public class Controller {
 
 	final Logger logger = LoggerFactory.getLogger(Controller.class);
@@ -78,38 +81,49 @@ public class Controller {
 		return "home";
 	}
 
+	@ResponseBody
 	@GetMapping("/pdf/{idCarrier}/{stringDate}")
-	public String homePageGeneratePDF(Model model, @PathVariable("idCarrier") long idCarrier,
-			@PathVariable("stringDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate stringDate) {
+	public ResponseEntity<InputStreamResource> homePageGeneratePDF(Model model,
+			@PathVariable("idCarrier") long idCarrier,
+			@PathVariable("stringDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate stringDate)
+			throws FileNotFoundException {
 		model.addAttribute("appName", appName);
 		model.addAttribute("localDateTime", LocalDateTime.now());
-		List<DeliveryBO> listDelivery = deliveryService.findAllByCarrierAndCreateDateDelivery(idCarrier,
-				stringDate.plusDays(1));
+		List<DeliveryBO> listDelivery = deliveryService.findAllByCarrierAndCreateDateDelivery(idCarrier, stringDate);
 
 		try {
 
-			new MyPdfGenerator(listDelivery);
+			new MyPdfGenerator(stringDate, listDelivery);
 		} catch (Exception e) {
 			logger.error("context", e);
 			logger.error(stringDate.toString(), e);
-		} 
-		return "home";
+		}
+		String nameFile = stringDate + "_" + listDelivery.get(0).getCarrier().getName()+".pdf";
+		logger.warn(nameFile);
+		File file = new File("results/pdf/" + nameFile);
+
+		InputStream inputStream = new FileInputStream(file);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+		responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
+		// just in case you need to support browsers
+		responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=" + nameFile));
+		return new ResponseEntity<>(inputStreamResource, responseHeaders, HttpStatus.OK);
 	}
-	
-	
-	@ResponseBody 
+
+	@ResponseBody
 	@GetMapping("/file/{nameFile}")
-	public ResponseEntity<InputStreamResource>  helloWorld(@PathVariable("nameFile") String nameFile) throws FileNotFoundException {
-		File file = new File("results/pdf/"+nameFile);
+	public ResponseEntity<InputStreamResource> helloWorld(@PathVariable("nameFile") String nameFile)
+			throws FileNotFoundException {
+		File file = new File("results/pdf/" + nameFile);
 		InputStream inputStream = new FileInputStream(file);
 		HttpHeaders responseHeaders = new HttpHeaders();
-        InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
-        responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
-        // just in case you need to support browsers
-        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename="+nameFile));
-        return new ResponseEntity<> (inputStreamResource,
-                                   responseHeaders,
-                                   HttpStatus.OK);
-		
+		InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+		responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
+		// just in case you need to support browsers
+		responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=" + nameFile));
+		return new ResponseEntity<>(inputStreamResource, responseHeaders, HttpStatus.OK);
+
 	}
 }
