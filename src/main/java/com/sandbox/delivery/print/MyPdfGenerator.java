@@ -76,8 +76,8 @@ public class MyPdfGenerator {
 						.setFont(font));
 
 				// Customer and Address
-				AddressBO addressCurrent = delivery.getCustomer().getCustomerListDeliveryAddress().get(0);
-
+				//AddressBO addressCurrent = delivery.getCustomer().getCustomerListDeliveryAddress().get(0);
+				AddressBO addressCurrent = delivery.getAddress();
 				table.addCell(new Cell().add(new Paragraph(addressCurrent.toString())).setFont(font));
 
 				// Package and Weight
