@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.slf4j.SLF4JLogger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import com.sandbox.delivery.mapper.PriceMapper;
 import com.sandbox.delivery.persistent.entities.Price;
 import com.sandbox.delivery.services.CarrierService;
 import com.sandbox.delivery.services.CustomerService;
-import com.sandbox.delivery.services.DeliveryServiceTest;
 import com.sandbox.delivery.services.PricingService;
 import com.sandbox.delivery.services.bo.AddressBO;
 import com.sandbox.delivery.services.bo.CarrierBO;

@@ -26,17 +26,20 @@ public class AddressBO {
 
 	@Override
 	public String toString() {
+		final String BREAK_LINE = "\n";
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(streetOne);
-		builder.append("\n");
+
 		if (streetTwo != null || !streetTwo.isBlank()) {
+			builder.append(BREAK_LINE);
 			builder.append(streetTwo);
 		}
 		if (streetThree != null || !streetThree.isBlank()) {
+			builder.append(BREAK_LINE);
 			builder.append(streetThree);
-			builder.append("\n");
 		}
+		builder.append(BREAK_LINE);
 		builder.append(zipCode);
 		builder.append(" ");
 		builder.append(city);

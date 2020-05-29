@@ -143,3 +143,8 @@ buildNumber.properties
 
 ### VS Code ###
 .vscodel/
+
+### Divers ###
+results/pdf/*.pdf
+results/pdf/label/*.pdf
+

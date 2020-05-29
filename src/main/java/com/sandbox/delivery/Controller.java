@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sandbox.delivery.print.MyPdfGenerator;
-import com.sandbox.delivery.services.CarrierService;
 import com.sandbox.delivery.services.CustomerService;
 import com.sandbox.delivery.services.DeliveryService;
 import com.sandbox.delivery.services.bo.AddressBO;
