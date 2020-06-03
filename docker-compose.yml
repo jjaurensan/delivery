@@ -14,7 +14,7 @@ services:
       MYSQL_HOST: '%'
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 
   delivery-back:
-    image: delivery-back
+    image: delivery
     container_name: delivery-back
     depends_on:
       - delivery-mysql
