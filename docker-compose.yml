@@ -11,8 +11,12 @@ services:
       MYSQL_USER: devRoot
       MYSQL_PASSWORD: Lucie-2009      
       MYSQL_ROOT_PASSWORD: Lucie-2009
-      MYSQL_HOST: '%'
+#    ports:
+#      - 3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 
+    networks:
+      - backendNetwork
+      
   delivery-back:
     image: delivery
     container_name: delivery-back
@@ -22,3 +26,24 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://delivery-mysql:3306/db_delivery?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     ports:
       - 8080:8080
+    links:
+      - delivery-mysql:database
+    networks:
+      - backendNetwork
+      - frontendNetwork
+  
+  delivery-front:
+    image: jjaurensan/delivery-front
+    container_name: delivery-front
+    ports:
+      - 4200:80
+    depends_on:
+      - delivery-back
+    networks:
+      - frontendNetwork
+
+networks:
+  backendNetwork:
+  frontendNetwork:
+  
+  
