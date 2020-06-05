@@ -23,7 +23,7 @@ import com.sandbox.delivery.services.DeliveryService;
 import com.sandbox.delivery.services.bo.DeliveryBO;
 import com.sandbox.delivery.utilities.PriceDelivery;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"*","http://localhost:4200","http://5and8ox.com:4200"})
 @RestController
 public class DeliveryRestController {
 
