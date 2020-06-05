@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.sandbox.delivery.services.bo.PricingBO;
 import com.sandbox.delivery.services.impl.PricingServiceImpl;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class PricingRestController {
 

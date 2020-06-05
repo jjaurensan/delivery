@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sandbox.delivery.services.PriceService;
 import com.sandbox.delivery.services.bo.PriceBO;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class PriceRestController {
 

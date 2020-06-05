@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.sandbox.delivery.services.AddressService;
 import com.sandbox.delivery.services.bo.AddressBO;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class AddressRestController {
 

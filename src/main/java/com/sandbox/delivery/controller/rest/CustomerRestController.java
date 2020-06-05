@@ -20,7 +20,7 @@ import com.sandbox.delivery.exception.CustomerNoExistExeception;
 import com.sandbox.delivery.services.CustomerService;
 import com.sandbox.delivery.services.bo.CustomerBO;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class CustomerRestController {
 

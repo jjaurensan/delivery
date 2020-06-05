@@ -23,7 +23,7 @@ import com.sandbox.delivery.services.DeliveryService;
 import com.sandbox.delivery.services.bo.DeliveryBO;
 import com.sandbox.delivery.utilities.PriceDelivery;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class DeliveryRestController {
 

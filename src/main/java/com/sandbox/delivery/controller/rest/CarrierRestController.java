@@ -20,7 +20,7 @@ import com.sandbox.delivery.exception.CarrierNoExistExeception;
 import com.sandbox.delivery.services.CarrierService;
 import com.sandbox.delivery.services.bo.CarrierBO;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class CarrierRestController {
 	@Autowired
