@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sandbox.delivery.services.PriceService;
 import com.sandbox.delivery.services.bo.PriceBO;
 
-@CrossOrigin(origins = {"*","http://localhost:4200","http://5and8ox.com:4200"})
+@CrossOrigin(origins = {"http://172.20.128.22:4200","http://172.20.128.22:80","http://localhost:80"})
 @RestController
 public class PriceRestController {
 
