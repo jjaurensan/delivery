@@ -20,7 +20,7 @@ import com.sandbox.delivery.exception.CarrierNoExistExeception;
 import com.sandbox.delivery.services.CarrierService;
 import com.sandbox.delivery.services.bo.CarrierBO;
 
-@CrossOrigin(origins = {"http://172.20.128.22:4200","http://172.20.128.22:80","http://localhost:80"})
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class CarrierRestController {
 	@Autowired

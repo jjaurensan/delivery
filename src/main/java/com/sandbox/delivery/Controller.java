@@ -38,7 +38,7 @@ import com.sandbox.delivery.services.bo.CustomerBO;
 import com.sandbox.delivery.services.bo.DeliveryBO;
 
 @org.springframework.stereotype.Controller
-@CrossOrigin(origins = {"http://172.20.128.22:4200","http://172.20.128.22:80","http://localhost:80"})
+@CrossOrigin(origins = "http://localhost:8080")
 public class Controller {
 
 	final Logger logger = LoggerFactory.getLogger(Controller.class);
