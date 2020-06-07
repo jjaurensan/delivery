@@ -40,13 +40,13 @@ services:
     depends_on:
       - delivery-back
     networks:
-            frontendNetwork:
-                    ipv4_address: 172.20.128.22
+      -  frontendNetwork
+                    #                    ipv4_address: 172.20.128.22
 
 networks:
   backendNetwork:
   frontendNetwork:
-    ipam:
-            config:
-                    - subnet: 172.20.0.0/16
+          #    ipam:
+            #            config:
+                    #                    - subnet: 172.20.0.0/16
   
