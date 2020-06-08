@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.sandbox.delivery.services.AddressService;
 import com.sandbox.delivery.services.bo.AddressBO;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://5and8ox.com:4200")
 @RestController
 public class AddressRestController {
 
