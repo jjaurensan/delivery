@@ -33,6 +33,8 @@ services:
   delivery-front:
     image: jjaurensan/delivery-front
     container_name: delivery-front
+    links:
+      - delivery-back
     ports:
       - "4200:80"
     depends_on:

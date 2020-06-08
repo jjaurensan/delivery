@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sandbox.delivery.utilities.MonthAmountStat;
 import com.sandbox.delivery.utilities.Statistic;
 
-@CrossOrigin(origins = "http://5and8ox.com:4200")
+@CrossOrigin
 @RestController
 public class StatistiqueController{
 	
