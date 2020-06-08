@@ -3,24 +3,21 @@
 version: '3.2'
 networks:
   internal-net:
-          #    name: api_subnet
-services: 
+services:
   delivery-mysql:
-    image: mysql:latest
+    image: mysql
     container_name: delivery-mysql
     environment:
       MYSQL_DATABASE: db_delivery
       MYSQL_USER: devRoot
       MYSQL_PASSWORD: Lucie-2009      
       MYSQL_ROOT_PASSWORD: Lucie-2009
-#    ports:
-#      - 3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 
     networks:
       - internal-net
       
   delivery-back:
-    image: delivery
+    image: delivery-back
     container_name: delivery-back
     depends_on:
       - delivery-mysql
