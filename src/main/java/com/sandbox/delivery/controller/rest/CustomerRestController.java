@@ -20,7 +20,7 @@ import com.sandbox.delivery.exception.CustomerNoExistExeception;
 import com.sandbox.delivery.services.CustomerService;
 import com.sandbox.delivery.services.bo.CustomerBO;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RestController
 public class CustomerRestController {
 

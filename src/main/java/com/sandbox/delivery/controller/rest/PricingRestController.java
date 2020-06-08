@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.sandbox.delivery.services.bo.PricingBO;
 import com.sandbox.delivery.services.impl.PricingServiceImpl;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RestController
 public class PricingRestController {
 
