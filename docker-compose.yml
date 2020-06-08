@@ -1,7 +1,9 @@
 # docker-compose.yml
 
-version: '3'
-
+version: '3.2'
+networks:
+  internal-net:
+          #    name: api_subnet
 services: 
   delivery-mysql:
     image: mysql:latest
@@ -15,7 +17,7 @@ services:
 #      - 3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 
     networks:
-      - backendNetwork
+      - internal-net
       
   delivery-back:
     image: delivery
@@ -25,28 +27,18 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://delivery-mysql:3306/db_delivery?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     ports:
-      - 8080:8080
+      - "8080:8080"
     links:
       - delivery-mysql:database
     networks:
-      - backendNetwork
-      - frontendNetwork
+      - internal-net
   
   delivery-front:
     image: jjaurensan/delivery-front
     container_name: delivery-front
     ports:
-      - 4200:80
+      - "4200:80"
     depends_on:
       - delivery-back
     networks:
-      -  frontendNetwork
-                    #                    ipv4_address: 172.20.128.22
-
-networks:
-  backendNetwork:
-  frontendNetwork:
-          #    ipam:
-            #            config:
-                    #                    - subnet: 172.20.0.0/16
-  
+      - internal-net
