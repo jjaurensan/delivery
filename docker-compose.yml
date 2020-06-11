@@ -2,19 +2,24 @@
 
 version: '3.2'
 networks:
-  internal-net:
+  frontend:
+  backend:
 services:
   delivery-mysql:
     image: mysql
     container_name: delivery-mysql
+    volumes:
+      - "delivery-mysql-data:/var/lib/mysql/data"   
     environment:
       MYSQL_DATABASE: db_delivery
       MYSQL_USER: devRoot
       MYSQL_PASSWORD: Lucie-2009      
       MYSQL_ROOT_PASSWORD: Lucie-2009
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 
+    ports:
+    - "3600:3600"
     networks:
-      - internal-net
+      - backend
       
   delivery-back:
     image: delivery-back
@@ -25,10 +30,13 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://delivery-mysql:3306/db_delivery?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     ports:
       - "8080:8080"
+    expose:
+      - "8080"
     links:
       - delivery-mysql:database
     networks:
-      - internal-net
+      - backend
+      - frontend
   
   delivery-front:
     image: jjaurensan/delivery-front
@@ -40,4 +48,6 @@ services:
     depends_on:
       - delivery-back
     networks:
-      - internal-net
+      - frontend
+volumes:
+  delivery-mysql-data:
